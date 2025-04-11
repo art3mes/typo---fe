@@ -1,23 +1,22 @@
 @import "tailwindcss";
 
-
 .correct-char {
-    color: green;
-    font-weight: bold;
+  color: green;
+  font-weight: bold;
 }
 
 .incorrect-char {
-    color: red;
-    text-decoration: underline;
+  color: red;
+  text-decoration: underline;
 }
 
 .current-char {
-    border-left: 2px solid #333;
-    animation: blink 1s steps(2, start) infinite;
+  border-left: 2px solid #333;
+  animation: blink 1s steps(2, start) infinite;
 }
 
 @keyframes blink {
-    to {
-        border-color: transparent;
-    }
+  to {
+    border-color: transparent;
+  }
 }

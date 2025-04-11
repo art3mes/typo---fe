@@ -3,10 +3,10 @@ import typingReducer from "./reducers/typingReducer";
 import gameReducer from "./reducers/gameReducer";
 
 const store = configureStore({
-    reducer: {
-        typing: typingReducer,
-        game: gameReducer,
-    },
+  reducer: {
+    typing: typingReducer,
+    game: gameReducer,
+  },
 });
 
 export default store;

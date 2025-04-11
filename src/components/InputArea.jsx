@@ -4,42 +4,42 @@ import * as Engine from "../utils/Engine";
 import { startGame } from "../store/actions/gameActions";
 
 const InputArea = () => {
-    const dispatch = useDispatch();
-    const typedText = useSelector((state) => state.typing.typedText);
-    const prompt = useSelector((state) => state.typing.prompt);
+  const dispatch = useDispatch();
+  const typedText = useSelector((state) => state.typing.typedText);
+  const prompt = useSelector((state) => state.typing.prompt);
 
-    const handleKeyDown = (e) => {
-        dispatch(startGame());
-        if (e.key === "Backspace") {
-            dispatch(removeLastChar());
+  const handleKeyDown = (e) => {
+    dispatch(startGame());
+    if (e.key === "Backspace") {
+      dispatch(removeLastChar());
 
-            Engine.evaluateTyping({
-                typedText: typedText.slice(0, -1),
-                promptText: prompt,
-            });
-        } else if (e.key.length === 1) {
-            const updatedText = typedText + e.key;
-            dispatch(appendChar(e.key));
+      Engine.evaluateTyping({
+        typedText: typedText.slice(0, -1),
+        promptText: prompt,
+      });
+    } else if (e.key.length === 1) {
+      const updatedText = typedText + e.key;
+      dispatch(appendChar(e.key));
 
-            Engine.evaluateTyping({
-                typedText: updatedText,
-                promptText: prompt,
-            });
-        }
-    };
+      Engine.evaluateTyping({
+        typedText: updatedText,
+        promptText: prompt,
+      });
+    }
+  };
 
-    return (
-        <div className="p-4">
-            <textarea
-                className="w-full h-40 p-2 border border-gray-300 rounded"
-                value={typedText}
-                onKeyDown={handleKeyDown}
-                onChange={() => { }}
-                placeholder="Type something..."
-                autoFocus
-            />
-        </div>
-    );
+  return (
+    <div className="p-4">
+      <textarea
+        className="w-full h-40 p-2 border border-gray-300 rounded"
+        value={typedText}
+        onKeyDown={handleKeyDown}
+        onChange={() => {}}
+        placeholder="Type something..."
+        autoFocus
+      />
+    </div>
+  );
 };
 
 export default InputArea;
