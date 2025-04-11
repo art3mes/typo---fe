@@ -23,3 +23,7 @@ export const highlightPromptChar = (index, type) => {
         el.classList.add(`${type}-char`);
     }
 };
+
+export const getTimerTime = (startTime) => {
+    return Math.floor((new Date() - startTime) / 1000);
+} 

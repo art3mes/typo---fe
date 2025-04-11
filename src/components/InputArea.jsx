@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { appendChar, removeLastChar } from "../store/actions/typingActions";
 import * as Engine from "../utils/Engine";
+import { startGame } from "../store/actions/gameActions";
 
 const InputArea = () => {
     const dispatch = useDispatch();
@@ -8,6 +9,7 @@ const InputArea = () => {
     const prompt = useSelector((state) => state.typing.prompt);
 
     const handleKeyDown = (e) => {
+        dispatch(startGame());
         if (e.key === "Backspace") {
             dispatch(removeLastChar());
 
