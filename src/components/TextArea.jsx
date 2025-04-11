@@ -1,15 +1,16 @@
-import { cn } from '@/utils/class-names.utils'
+import { cn } from '../utils/classnames.utils'
 import { useEffect, useRef, useState } from 'react'
+import React from 'react';
 import { ThickArrowUpIcon } from '@radix-ui/react-icons'
 import { Focus } from 'lucide-react'
-import { useEngine } from '@/state/game-engine.store'
+import { useEngine } from '../state/gameEngine.store'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Caret } from './caret'
-import { TimeSelector } from './test-time-selector'
-import { AppStore } from '@/state/app-store'
-import { TimerStore } from '@/state/timer.store'
+import { TimeSelector } from './testTimeSelector'
+import { AppStore } from '../state/app.store'
+import { TimerStore } from '../state/timer.store'
 
-export const TextArea = () => {
+const TextArea = () => {
     const { isPaused, isRunning } = TimerStore.useStore('isPaused', 'isRunning')
     const {
         textAreaFocus: focus,
@@ -27,7 +28,7 @@ export const TextArea = () => {
     const [capslockRef] = useAutoAnimate()
     const [isCaps, setIsCaps] = useState(false)
 
-    const textAreaRef = useRef < HTMLDivElement > (null)
+    const textAreaRef = useRef(null)
     const { fontSize } = AppStore.useStore('fontSize')
     const lineHeight = fontSize * 1.6
 
@@ -39,7 +40,6 @@ export const TextArea = () => {
         document.addEventListener('keydown', handleKeydown)
         return () => document.removeEventListener('keydown', handleKeydown)
     }, [])
-
 
     useEffect(() => {
         const letter = document.getElementById(`letter-${userInput.length}`)
@@ -129,3 +129,5 @@ const TimeText = () => {
     const { timeInt } = TimerStore.useStore('timeInt')
     return <p className='text-2xl text-primary'>{timeInt}</p>
 }
+
+export default TextArea;

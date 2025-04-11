@@ -5,7 +5,7 @@ import TextArea from '../components/TextArea';
 function App() {
 
     return (
-        <p className="font-bold text-amber-300 text-lg">
+        <p >
             <TextArea />
         </p>
     )

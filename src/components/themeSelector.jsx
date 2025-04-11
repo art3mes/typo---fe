@@ -1,10 +1,19 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { Check, Loader2, Palette, Search } from 'lucide-react'
-import { formatThemeName, stopPreviewingTheme, previewTheme } from '@/utils/theme.utils'
-import { cn } from '@/utils/class-names.utils'
-import { AppStore } from '../state/app.store'
 import Fuse from 'fuse.js'
+
+import { formatThemeName, previewTheme, stopPreviewingTheme } from '@/utils/theme.utils'
 import { clamp } from '@/utils/math.utils'
+import { debounce } from '@/utils/helpers'
+import { AppStore } from '../state/app.store'
+
 import {
     Dialog,
     DialogContent,
@@ -16,8 +25,7 @@ import {
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { For } from './map'
-import { debounce } from '@/utils/helpers'
-import { useThemes } from '@/react-query/queries/lazy-modules.query'
+import { cn } from '../utils/classnames.utils'
 
 const DIRECTION_MAP = {
     ArrowUp: -1,
@@ -26,19 +34,24 @@ const DIRECTION_MAP = {
 
 const debouncedPreviewTheme = debounce(previewTheme, 100)
 
+const useThemes = (opts = {}) => {
+    return useQuery({
+        queryKey: ['theme-list'],
+        queryFn: () =>
+            import('@/styles/theme-list.json').then((m) => m.default),
+        ...opts,
+    })
+}
+
 export const ThemeSwitcherList = () => {
     const { data: themes = [], isLoading: isThemesLoading } = useThemes()
-
-    const fuse = useMemo(
-        () =>
-            new Fuse(themes, {
-                keys: ['name', 'id'],
-                threshold: 0.4,
-            }),
-        [themes]
-    )
+    const fuse = useMemo(() => new Fuse(themes, {
+        keys: ['name', 'id'],
+        threshold: 0.4,
+    }), [themes])
 
     const scrollerRef = useRef(null)
+
     const [isOpen, setIsOpen] = useState(false)
     const [search, setSearch] = useState('')
     const [isHoverDisabled, setIsHoverDisabled] = useState(false)
@@ -48,29 +61,25 @@ export const ThemeSwitcherList = () => {
 
     const filteredThemes = useMemo(() => {
         if (!search) return themes
-        return fuse.search(search).map((result) => result.item)
+        return fuse.search(search).map(result => result.item)
     }, [search, themes])
 
-    function handleKeyboardNavigation(e) {
-        if (filteredThemes.length === 0) return
+    const updateTheme = () => AppStore.set({ theme: previewedTheme })
 
-        setPreviewedTheme((prev) => {
-            if (!(e.key in DIRECTION_MAP)) return prev
+    const handleKeyboardNavigation = (e) => {
+        if (!(e.key in DIRECTION_MAP) || filteredThemes.length === 0) return
 
-            const currIdx = filteredThemes.findIndex((s) => s.name === prev)
+        setPreviewedTheme(prev => {
+            const currIdx = filteredThemes.findIndex(t => t.name === prev)
             if (currIdx === -1) return prev
 
+            const newIdx = clamp(0, currIdx + DIRECTION_MAP[e.key], filteredThemes.length - 1)
+            const newTheme = filteredThemes[newIdx]
             setIsHoverDisabled(true)
 
-            const direction = DIRECTION_MAP[e.key]
-            const newIndex = clamp(0, currIdx + direction, filteredThemes.length - 1)
-
-            const newTheme = filteredThemes[newIndex]
-            if (!newTheme) return prev
-
             document.getElementById(`style-${newTheme.id}`)?.scrollIntoView({
-                inline: 'nearest',
                 block: 'nearest',
+                inline: 'nearest',
             })
 
             return newTheme.name
@@ -79,104 +88,93 @@ export const ThemeSwitcherList = () => {
         if (e.key === 'Enter') updateTheme()
     }
 
-    function updateTheme() {
-        AppStore.set({ theme: previewedTheme })
-    }
-
-    function onMouseMove() {
-        setIsHoverDisabled(false)
-    }
-
     useEffect(() => {
         if (!isOpen) return
-        document.addEventListener('mousemove', onMouseMove)
-        document.addEventListener('keydown', handleKeyboardNavigation)
+        const enableHover = () => setIsHoverDisabled(false)
 
+        document.addEventListener('mousemove', enableHover)
+        document.addEventListener('keydown', handleKeyboardNavigation)
         return () => {
-            document.removeEventListener('mousemove', onMouseMove)
+            document.removeEventListener('mousemove', enableHover)
             document.removeEventListener('keydown', handleKeyboardNavigation)
         }
-    }, [isOpen, search, previewedTheme])
+    }, [isOpen, filteredThemes])
 
     useEffect(() => {
-        if (!isOpen || !filteredThemes.length) return
-        setPreviewedTheme(filteredThemes[0].name)
+        if (isOpen && filteredThemes.length > 0) {
+            setPreviewedTheme(filteredThemes[0].name)
+        }
     }, [filteredThemes, isOpen])
 
     useEffect(() => {
         debouncedPreviewTheme(previewedTheme)
     }, [previewedTheme])
 
-    const renderThemeItem = useCallback(
-        (theme) => {
-            if (!theme) return null
+    const renderThemeItem = useCallback((theme) => {
+        if (!theme) return null
 
-            const { id, name, mainColor, textColor, subColor } = theme
-            const isFocusedTheme = name === previewedTheme
-            const isCurrentTheme = name === appliedTheme
+        const { id, name, mainColor, textColor, subColor } = theme
+        const isFocused = name === previewedTheme
+        const isCurrent = name === appliedTheme
 
-            return (
-                <div
-                    key={id}
-                    id={`style-${id}`}
-                    onMouseEnter={() => !isHoverDisabled && setPreviewedTheme(name)}
-                    onClick={updateTheme}
-                    className={cn(
-                        'flex cursor-pointer items-center justify-between rounded-sm border border-transparent px-2 py-1 text-foreground',
-                        isCurrentTheme && 'border-primary/50 bg-primary/20 shadow-md',
-                        isFocusedTheme && 'bg-foreground/20'
+        return (
+            <div
+                key={id}
+                id={`style-${id}`}
+                onMouseEnter={() => !isHoverDisabled && setPreviewedTheme(name)}
+                onClick={updateTheme}
+                className={cn(
+                    'flex cursor-pointer items-center justify-between rounded-sm border border-transparent px-2 py-1 text-foreground',
+                    isCurrent && 'border-primary/50 bg-primary/20 shadow-md',
+                    isFocused && 'bg-foreground/20'
+                )}
+            >
+                <p className={cn(isCurrent && 'flex items-center gap-1')}>
+                    {isCurrent ? (
+                        <Check className="-mb-1 h-4 w-4" />
+                    ) : (
+                        <span className="mr-1 text-xs text-muted-foreground">{id}.</span>
                     )}
-                >
-                    <p className={cn(isCurrentTheme && 'flex items-center gap-1')}>
-                        {isCurrentTheme ? (
-                            <Check className="-mb-1 h-4 w-4" />
-                        ) : (
-                            <span className="mr-1 text-xs text-muted-foreground">{id}.</span>
+                    {formatThemeName(name)}
+                </p>
+                <div className="flex gap-1">
+                    <For each={[mainColor, textColor, subColor]}>
+                        {(color, i) => (
+                            <div
+                                key={i}
+                                style={{ backgroundColor: color }}
+                                className="h-3 w-3 rounded-full border border-foreground"
+                            />
                         )}
-                        {formatThemeName(name)}
-                    </p>
-                    <div className="flex gap-1">
-                        <For each={[mainColor, textColor, subColor]}>
-                            {(color, i) => (
-                                <div
-                                    key={i}
-                                    style={{ backgroundColor: color }}
-                                    className="flex h-3 w-3 items-center gap-1 rounded-full border border-foreground"
-                                />
-                            )}
-                        </For>
-                    </div>
+                    </For>
                 </div>
-            )
-        },
-        [previewedTheme, appliedTheme, isHoverDisabled, isOpen]
-    )
+            </div>
+        )
+    }, [previewedTheme, appliedTheme, isHoverDisabled])
 
     return (
         <Dialog
             onOpenChange={(open) => {
                 setIsOpen(open)
-                !open && stopPreviewingTheme()
+                if (!open) stopPreviewingTheme()
             }}
         >
             <DialogTrigger asChild>
-                <Button
-                    variant="ghost"
-                    className="h-fit gap-1 text-xs text-muted-foreground"
-                >
+                <Button variant="ghost" className="h-fit gap-1 text-xs text-muted-foreground">
                     <Palette className="h-3 w-3" />
                     {appliedTheme}
                 </Button>
             </DialogTrigger>
             <DialogContent className="flex h-fit max-h-[80%] min-w-full flex-col overflow-hidden sm:min-w-[80%]">
-                <DialogHeader className="w-full">
+                <DialogHeader>
                     <DialogTitle className="text-xl font-semibold">Themes</DialogTitle>
                     <DialogDescription>
                         Select a theme to change the color scheme of the app.
                         <br />
-                        You can also search for a theme by name or the index.
+                        You can also search for a theme by name or index.
                     </DialogDescription>
                 </DialogHeader>
+
                 <Input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}

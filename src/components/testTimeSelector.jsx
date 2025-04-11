@@ -1,5 +1,6 @@
 import { AppStore } from '../state/app.store'
 import { Timer } from 'lucide-react'
+import React from 'react';
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
 
 const tabClassNames =

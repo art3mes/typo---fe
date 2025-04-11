@@ -1,6 +1,7 @@
-import { cn } from '@/utils/class-names.utils';
+import React from 'react';
+import { cn } from '../utils/classnames.utils';
 import { TimerStore } from '../state/timer.store';
-import { useEngine } from '../state/game-engine.store';
+import { useEngine } from '../state/gameEngine.store';
 
 export const Caret = (props) => {
     const { caretPosition: pos } = useEngine('caretPosition');

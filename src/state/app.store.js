@@ -5,7 +5,6 @@ import {
     DEFAULT_CARET_STYLE,
 } from '../config/caret.config';
 import { DEFAULT_FONT } from '../config/fonts.config';
-import { DEFAULT_SOUNDPACK } from '../config/keyboard.config';
 import { createSelector } from 'better-zustand-selector';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -22,9 +21,6 @@ const store = create(
             musicVolume: 1,
             keyboardVolume: 1,
             notificationsVolume: 1,
-
-            // Keyboard Sound
-            soundPack: DEFAULT_SOUNDPACK.id,
 
             // Game Config
             time: 30,
