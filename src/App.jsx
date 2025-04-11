@@ -1,8 +1,7 @@
-
+import TypingArea from "./components/TypingArea";
 
 function App() {
-
-  return (<div>return to dust</div>);
+  return <TypingArea />;
 }
 
-export default App
+export default App;

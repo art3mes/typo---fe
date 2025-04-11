@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+
+.correct {
+    @apply text-green-400 underline;
+}
+
+.wrong {
+    @apply text-red-500 underline;
+}
