@@ -1,4 +1,5 @@
 import RandomWordsGenerator from "../utils/RandomWordsGenerator";
+import InputArea from "./InputArea";
 import RenderTypingPrompt from "./RenderTypingPrompt";
 
 const TypingArea = () => {
@@ -29,7 +30,9 @@ const TypingArea = () => {
         "nitrosyl",
         "shrievalties",
         "shepherds"];
-    return (<RenderTypingPrompt words={words} />);
+    return (<div>
+        <RenderTypingPrompt words={words} />
+        <InputArea /></div>);
 };
 
 export default TypingArea;
