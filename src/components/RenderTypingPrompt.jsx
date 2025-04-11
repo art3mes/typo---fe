@@ -1,21 +1,24 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setPrompt } from "../store/actions/typingActions";
+import { flattenWordsToChars } from "../utils/Helper";
+
 const RenderTypingPrompt = ({ words }) => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const promptChars = flattenWordsToChars(words);
+        dispatch(setPrompt(promptChars));
+    }, [words, dispatch]);
+
     const renderSpans = () => {
-        const spans = [];
-        console.log("ender", words)
-
-        words.forEach((word, wordIndex) => {
-            for (let char of word) {
-                spans.push(<span key={spans.length}>{char}</span>);
-            }
-            if (wordIndex !== words.length - 1) {
-                spans.push(<span key={spans.length}> </span>);
-            }
-        });
-
+        const spans = flattenWordsToChars(words).map((char, index) => (
+            <span id={`prompt-${index}`} key={index}>{char}</span>
+        ));
         return spans;
     };
 
-    return renderSpans();
+    return <div>{renderSpans()}</div>;
 };
 
 export default RenderTypingPrompt;

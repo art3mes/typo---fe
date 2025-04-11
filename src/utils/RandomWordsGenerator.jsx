@@ -1,7 +1,7 @@
 
 const RandomWordsGenerator = (count) => {
 
-    return [
+    const words = [
         "skivvying",
         "undercarriage",
         "mir",
@@ -28,6 +28,8 @@ const RandomWordsGenerator = (count) => {
         "nitrosyl",
         "shrievalties",
         "shepherds"];
+
+    return words;
 };
 
 export default RandomWordsGenerator;

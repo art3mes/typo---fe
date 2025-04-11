@@ -1,10 +1,14 @@
 
 const initialState = {
     typedText: "",
+    prompt: [],
 };
 
 const typingReducer = (state = initialState, action) => {
     switch (action.type) {
+        case "SET_PROMPT":
+            return { ...state, prompt: action.payload };
+
         case "SET_TYPED_TEXT":
             return { ...state, typedText: action.payload };
 
@@ -16,6 +20,9 @@ const typingReducer = (state = initialState, action) => {
 
         case "RESET_TYPED_TEXT":
             return { ...state, typedText: "" };
+
+        case "RESET_PROMPT":
+            return { ...state, prompt: [] };
 
         default:
             return state;
