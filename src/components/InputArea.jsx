@@ -7,6 +7,7 @@ const InputArea = () => {
   const dispatch = useDispatch();
   const typedText = useSelector((state) => state.typing.typedText);
   const prompt = useSelector((state) => state.typing.prompt);
+  const gameStarted = useSelector((state) => state.game.gameStarted);
 
   const handleKeyDown = (e) => {
     dispatch(startGame());
@@ -16,6 +17,7 @@ const InputArea = () => {
       Engine.evaluateTyping({
         typedText: typedText.slice(0, -1),
         promptText: prompt,
+        gameStarted,
       });
     } else if (e.key.length === 1) {
       const updatedText = typedText + e.key;
@@ -24,6 +26,7 @@ const InputArea = () => {
       Engine.evaluateTyping({
         typedText: updatedText,
         promptText: prompt,
+        gameStarted,
       });
     }
   };

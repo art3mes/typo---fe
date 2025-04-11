@@ -1,12 +1,13 @@
 import { highlightPromptChar } from "./Helper";
 
-export const evaluateTyping = ({ typedText, promptText }) => {
+export const evaluateTyping = ({ typedText, promptText, gameStarted }) => {
   const errors = [];
   const matches = [];
 
-  // Reset all first
-  for (let i = 0; i < promptText.length; i++) {
-    highlightPromptChar(i, "reset");
+  if (!gameStarted) {
+    for (let i = 0; i < promptText.length; i++) {
+      highlightPromptChar(i, "reset");
+    }
   }
 
   for (let i = 0; i < typedText.length; i++) {

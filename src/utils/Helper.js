@@ -17,9 +17,11 @@ export const highlightPromptChar = (index, type) => {
   const el = document.getElementById(`prompt-${index}`);
   if (!el) return;
 
-  el.classList.remove("correct-char", "incorrect-char", "current-char");
+  const highlightClasses = ["correct-char", "incorrect-char", "current-char"];
 
-  if (type !== "reset") {
+  el.classList.remove(...highlightClasses);
+
+  if (type && type !== "reset" && highlightClasses.includes(`${type}-char`)) {
     el.classList.add(`${type}-char`);
   }
 };

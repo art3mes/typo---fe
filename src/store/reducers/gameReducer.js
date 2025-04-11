@@ -9,7 +9,7 @@ const gameReducer = (state = initialState, action) => {
       return { ...state, gameStarted: true, startTime: action.payload };
 
     case "END_GAME":
-      return { ...state, gameStarted: false };
+      return { ...state, gameStarted: false, startTime: null };
 
     default:
       return state;

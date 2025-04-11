@@ -22,6 +22,8 @@ const CountdownTimer = ({ duration = 30, onComplete }) => {
 
       updateTimeLeft();
       intervalRef.current = setInterval(updateTimeLeft, 1000);
+    } else {
+      setTimeLeft(duration);
     }
 
     return () => clearInterval(intervalRef.current);
