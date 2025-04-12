@@ -3,6 +3,7 @@ const initialState = {
   prompt: [],
   correctCount: 0,
   mistakeCount: 0,
+  wpm: 0,
 };
 
 const typingReducer = (state = initialState, action) => {
@@ -33,6 +34,9 @@ const typingReducer = (state = initialState, action) => {
 
     case "RESET_COUNT":
       return { ...state, mistakeCount: 0, correctCount: 0 };
+
+    case "SET_WPM":
+      return { ...state, wpm: action.payload };
 
     default:
       return state;

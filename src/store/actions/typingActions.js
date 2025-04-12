@@ -7,6 +7,7 @@ export const RESET_PROMPT = "RESET_PROMPT";
 export const INC_CORRECT_COUNT = "INC_CORRECT_COUNT";
 export const INC_MISTAKE_COUNT = "INC_MISTAKE_COUNT";
 export const RESET_COUNT = "RESET_COUNT";
+export const SET_WPM = "SET_WPM";
 
 export const setTypedText = (text) => ({
   type: SET_TYPED_TEXT,
@@ -45,4 +46,8 @@ export const increaseMistakeCount = () => ({
 
 export const resetCount = () => ({
   type: RESET_COUNT,
+});
+
+export const setWPM = () => ({
+  type: SET_WPM,
 });

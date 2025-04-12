@@ -1,15 +1,19 @@
-// Engine.js
-import { highlightPromptChar } from "./Helper";
+import { calculateAccuracy, highlightPromptChar } from "./Helper";
 import {
   increaseCorrectCount,
   increaseMistakeCount,
 } from "../store/actions/typingActions";
+import socket from "../socket/socket";
 
 export const evaluateTyping = ({
   typedText,
   promptText,
   gameStarted,
   dispatch,
+  correctCount,
+  mistakeCount,
+  roomId,
+  userId,
 }) => {
   if (!gameStarted) {
     for (let i = 0; i < promptText.length; i++) {
@@ -34,12 +38,36 @@ export const evaluateTyping = ({
     }
   }
 
+  let updatedCorrect = correctCount;
+  let updatedIncorrect = mistakeCount;
+
   if (typedChar !== undefined && expectedChar !== undefined) {
     if (typedChar === expectedChar) {
+      updatedCorrect++;
       dispatch(increaseCorrectCount());
     } else {
+      updatedIncorrect++;
       dispatch(increaseMistakeCount());
     }
+  }
+
+  if (roomId && userId) {
+    const accuracy = calculateAccuracy(updatedCorrect, updatedIncorrect);
+    console.log(
+      "sending data to socket",
+      roomId,
+      userId,
+      updatedCorrect,
+      updatedIncorrect,
+      accuracy,
+    );
+    socket.emit("typing-update", {
+      roomId,
+      userId,
+      correctCount: updatedCorrect,
+      mistakeCount: updatedIncorrect,
+      accuracy,
+    });
   }
 
   // Add caret to next character

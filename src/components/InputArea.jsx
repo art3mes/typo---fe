@@ -1,15 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
-import { appendChar } from "../../store/actions/typingActions";
-import * as Engine from "../../utils/Engine";
-import { startGame } from "../../store/actions/gameActions";
+import { appendChar } from "../store/actions/typingActions";
+import * as Engine from "../utils/Engine";
+import { startGame } from "../store/actions/gameActions";
 import React, { forwardRef } from "react";
 
-const InputArea = forwardRef((props, ref) => {
+const InputArea = forwardRef((prop, ref) => {
   const dispatch = useDispatch();
-  const typedText = useSelector((state) => state.typing.typedText);
-  const prompt = useSelector((state) => state.typing.prompt);
   const startTime = useSelector((state) => state.game.startTime);
   const gameEnded = useSelector((state) => state.game.gameEnded);
+  const prompt = useSelector((state) => state.typing.prompt);
+  const typedText = useSelector((state) => state.typing.typedText);
+  const correctCount = useSelector((state) => state.typing.correctCount);
+  const mistakeCount = useSelector((state) => state.typing.mistakeCount);
+  const roomId = useSelector((state) => state.room.roomId);
+  const userId = useSelector((state) => state.room.userId);
 
   const handleKeyDown = (e) => {
     if (gameEnded) return;
@@ -29,6 +33,10 @@ const InputArea = forwardRef((props, ref) => {
         promptText: prompt,
         gameStarted: true,
         dispatch,
+        correctCount,
+        mistakeCount,
+        roomId,
+        userId,
       });
     }
   };

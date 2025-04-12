@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_BASE = "http://localhost:3000/api/room";
+// const API_BASE = "https://typo-be-production.up.railway.app/api/room"
 
 export const createRoomAPI = async (username, socketId, roomName) => {
   try {

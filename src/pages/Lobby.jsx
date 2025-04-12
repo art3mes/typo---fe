@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { startGame } from "../store/actions/gameActions";
-import socket from "../socket/socket";
 import { useNavigate } from "react-router-dom";
+import socket from "../socket/socket";
 
 const Lobby = () => {
   const dispatch = useDispatch();
@@ -24,13 +24,14 @@ const Lobby = () => {
 
     socket.on("start-game", () => {
       dispatch(startGame());
+      navigate("/game");
     });
 
     return () => {
       socket.off("user-joined");
       socket.off("start-game");
     };
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   const handleCopyRoomId = () => {
     navigator.clipboard.writeText(roomId);
@@ -74,7 +75,6 @@ const Lobby = () => {
 
       <button
         className="mt-6 px-6 py-2 bg-green-500 hover:bg-green-600 rounded shadow disabled:opacity-50"
-        disabled={users.length < 2}
         onClick={handleStartGame}
       >
         Start Game
