@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <>
+    <div className="flex flex-col h-[130vh] items-center relative">
       <Header />
       <Routes>
         <Route path="/" element={<RoomForm />} />
@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/game" element={<Game />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 };
 

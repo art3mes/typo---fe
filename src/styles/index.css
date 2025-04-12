@@ -1,4 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Mono&family=Pixelify+Sans:wght@400..700&family=Quicksand:wght@300..700&display=swap');
 @import "tailwindcss";
+
+@theme {
+    /* Fonts */
+      --font-mono: 'PT Mono', monospace;
+      --font-pixelify: 'Pixelify Sans', sans-serif;
+      --font-quicksand: 'Quicksand', sans-serif;
+    
+      /* Colors */
+      --color-primary: #4981cf;
+      --color-secondary: #89aad3;
+      --color-ternary: #cadaee;
+      --color-light: #e8ebf2;
+}
+
+
+html, body {
+  @apply p-0 m-0 bg-[#4981cf] font-quicksand;
+}
 
 .correct-char {
   color: green;

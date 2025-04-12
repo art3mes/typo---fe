@@ -48,8 +48,8 @@ const RoomForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white space-y-6 p-6">
-      <h2 className="text-3xl font-bold">
+    <div className="flex flex-col items-center justify-center bg-ternary rounded-md shadow-lg space-y-6 p-16 mt-24">
+      <h2 className="text-2xl font-bold">
         {isCreating ? "Create" : "Join"} a Room
       </h2>
 
@@ -59,21 +59,23 @@ const RoomForm = () => {
       >
         <input
           type="text"
-          className="p-2 rounded bg-gray-800"
-          placeholder="Your Username"
+          className="w-full px-4 py-2 rounded-md bg-light text-primary border border-ternary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
         <input
           type="text"
-          className="p-2 rounded bg-gray-800"
+          className="w-full px-4 py-2 rounded-md bg-light text-primary border border-ternary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
           placeholder="Room Name"
           value={roomName}
           onChange={(e) => setRoomName(e.target.value)}
+          required
         />
 
         <button
-          className="px-4 py-2 bg-pink-500 rounded hover:bg-pink-600"
+          className="bg-primary text-white px-5 py-2 rounded-md shadow-md hover:bg-secondary hover:text-primary transition duration-300"
           type="submit"
         >
           {isCreating ? "Create Room" : "Join Room"}
@@ -82,9 +84,9 @@ const RoomForm = () => {
 
       <button
         onClick={() => setIsCreating(!isCreating)}
-        className="text-sm text-pink-300 underline"
+        className="text-sm underline"
       >
-        {isCreating ? "Join existing room instead" : "Create new room instead"}
+        {isCreating ? "Join an existing room instead" : "Create a new room instead"}
       </button>
     </div>
   );
