@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { calculateAccuracy, calculateWPM } from "../utils/Helper";
+import { calculateAccuracy, calculateWPM } from "../../utils/Helper";
 import { useEffect, useState } from "react";
 
 const ScoreCard = () => {

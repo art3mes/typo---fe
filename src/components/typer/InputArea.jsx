@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { appendChar } from "../store/actions/typingActions";
-import * as Engine from "../utils/Engine";
-import { startGame } from "../store/actions/gameActions";
+import { appendChar } from "../../store/actions/typingActions";
+import * as Engine from "../../utils/Engine";
+import { startGame } from "../../store/actions/gameActions";
 import React, { forwardRef } from "react";
 
 const InputArea = forwardRef((props, ref) => {

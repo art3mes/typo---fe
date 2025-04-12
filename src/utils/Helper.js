@@ -42,9 +42,7 @@ export const calculateWPM = (charCount, startTime) => {
 };
 
 export const calculateAccuracy = (correctCount, errorCount) => {
-  console.log(correctCount, errorCount);
   if (correctCount > 0)
     return Math.round((correctCount / (correctCount + errorCount)) * 100);
-
   return 0;
 };

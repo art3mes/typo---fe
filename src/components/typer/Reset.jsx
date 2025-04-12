@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { resetGame } from "../store/actions/gameActions";
-import { resetCount, resetTypedText } from "../store/actions/typingActions";
-import * as Engine from "../utils/Engine";
+import { resetGame } from "../../store/actions/gameActions";
+import { resetCount, resetTypedText } from "../../store/actions/typingActions";
+import * as Engine from "../../utils/Engine";
 
 const Reset = () => {
   const dispatch = useDispatch();

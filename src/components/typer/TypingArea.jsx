@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
-import { flattenWordsToChars } from "../utils/Helper";
-import RandomWordsGenerator from "../utils/RandomWordsGenerator";
+import { flattenWordsToChars } from "../../utils/Helper";
+import RandomWordsGenerator from "../../utils/RandomWordsGenerator";
 import CountdownTimer from "./CountDownTimer";
 import InputArea from "./InputArea";
 import RenderTypingPrompt from "./RenderTypingPrompt";
 import Reset from "./Reset";
-import { setPrompt } from "../store/actions/typingActions";
+import { setPrompt } from "../../store/actions/typingActions";
 import Refresh from "./Refresh";
 import ScoreCard from "./ScoreCard";
 import { useEffect, useRef, useState } from "react";

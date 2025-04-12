@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { endGame } from "../store/actions/gameActions";
+import { endGame } from "../../store/actions/gameActions";
 
 const CountdownTimer = ({ duration = 30 }) => {
   const startTime = useSelector((state) => state.game.startTime);
