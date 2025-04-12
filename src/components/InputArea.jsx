@@ -7,17 +7,22 @@ const InputArea = () => {
   const dispatch = useDispatch();
   const typedText = useSelector((state) => state.typing.typedText);
   const prompt = useSelector((state) => state.typing.prompt);
-  const gameStarted = useSelector((state) => state.game.gameStarted);
+  const startTime = useSelector((state) => state.game.startTime);
 
   const handleKeyDown = (e) => {
-    dispatch(startGame());
+    if (!startTime) {
+      dispatch(startGame());
+    }
+    console.log(startTime);
+    console.log("game started");
     if (e.key === "Backspace") {
       dispatch(removeLastChar());
 
       Engine.evaluateTyping({
         typedText: typedText.slice(0, -1),
         promptText: prompt,
-        gameStarted,
+        gameStarted: true,
+        dispatch,
       });
     } else if (e.key.length === 1) {
       const updatedText = typedText + e.key;
@@ -26,7 +31,8 @@ const InputArea = () => {
       Engine.evaluateTyping({
         typedText: updatedText,
         promptText: prompt,
-        gameStarted,
+        gameStarted: true,
+        dispatch,
       });
     }
   };

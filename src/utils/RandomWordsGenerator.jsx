@@ -1,34 +1,14 @@
-const RandomWordsGenerator = (count) => {
-  const words = [
-    "skivvying",
-    "undercarriage",
-    "mir",
-    "ruminative",
-    "rabble",
-    "mohair",
-    "isoforms",
-    "cairn",
-    "ovality",
-    "vacuolated",
-    "feasances",
-    "atonic",
-    "riboflavin",
-    "vilifications",
-    "sisterly",
-    "subserviently",
-    "carbuncled",
-    "dressmakers",
-    "remade",
-    "antepasts",
-    "whizzing",
-    "narc",
-    "epizootiology",
-    "nitrosyl",
-    "shrievalties",
-    "shepherds",
-  ];
+import { wordStore } from "./wordStore";
 
-  return words;
+const DEFAULT_WORD_COUNT = 60;
+
+const RandomWordsGenerator = (count = DEFAULT_WORD_COUNT) => {
+  const arr = [...wordStore];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr.slice(0, count);
 };
 
 export default RandomWordsGenerator;

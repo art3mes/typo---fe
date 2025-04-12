@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { endGame } from "../store/actions/gameActions";
 
-const CountdownTimer = ({ duration = 30, onComplete }) => {
+const CountdownTimer = ({ duration = 30 }) => {
   const startTime = useSelector((state) => state.game.startTime);
   const [timeLeft, setTimeLeft] = useState(duration);
   const intervalRef = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (startTime) {
@@ -16,7 +18,8 @@ const CountdownTimer = ({ duration = 30, onComplete }) => {
 
         if (remaining === 0) {
           clearInterval(intervalRef.current);
-          if (onComplete) onComplete();
+          console.log("game ended");
+          dispatch(endGame());
         }
       };
 
@@ -27,7 +30,7 @@ const CountdownTimer = ({ duration = 30, onComplete }) => {
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [startTime, duration, onComplete]);
+  }, [startTime, duration, dispatch]);
 
   return (
     <div className="text-xl font-mono font-bold text-red-600">{timeLeft}s</div>

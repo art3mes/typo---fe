@@ -4,6 +4,9 @@ export const REMOVE_LAST_CHAR = "REMOVE_LAST_CHAR";
 export const RESET_TYPED_TEXT = "RESET_TYPED_TEXT";
 export const SET_PROMPT = "SET_PROMPT";
 export const RESET_PROMPT = "RESET_PROMPT";
+export const INC_CORRECT_COUNT = "INC_CORRECT_COUNT";
+export const INC_MISTAKE_COUNT = "INC_MISTAKE_COUNT";
+export const RESET_COUNT = "RESET_COUNT";
 
 export const setTypedText = (text) => ({
   type: SET_TYPED_TEXT,
@@ -30,4 +33,16 @@ export const resetTypedText = () => ({
 
 export const resetPrompt = () => ({
   type: RESET_PROMPT,
+});
+
+export const increaseCorrectCount = () => ({
+  type: INC_CORRECT_COUNT,
+});
+
+export const increaseMistakeCount = () => ({
+  type: INC_MISTAKE_COUNT,
+});
+
+export const resetCount = () => ({
+  type: RESET_COUNT,
 });

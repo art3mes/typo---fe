@@ -29,3 +29,15 @@ export const highlightPromptChar = (index, type) => {
 export const getTimerTime = (startTime) => {
   return Math.floor((new Date() - startTime) / 1000);
 };
+
+export const calculateWPM = (charCount, startTime) => {
+  const now = Date.now();
+  const elapsedTimeInMinutes = (now - startTime) / 1000 / 60;
+
+  if (elapsedTimeInMinutes <= 0 || charCount === 0) return 0;
+
+  const wordsTyped = charCount / 5;
+  const wpm = wordsTyped / elapsedTimeInMinutes;
+
+  return Math.round(wpm);
+};

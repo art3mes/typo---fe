@@ -7,19 +7,20 @@ import RenderTypingPrompt from "./RenderTypingPrompt";
 import Reset from "./Reset";
 import { setPrompt } from "../store/actions/typingActions";
 import Refresh from "./Refresh";
+import ScoreCard from "./ScoreCard";
 
 const TypingArea = () => {
   const dispatch = useDispatch();
-  const words = RandomWordsGenerator(10);
+  const words = RandomWordsGenerator();
   const promptChars = flattenWordsToChars(words);
   dispatch(setPrompt(promptChars));
 
   return (
     <div>
       <CountdownTimer duration={30} />
-      <RenderTypingPrompt words={words} />
+      <RenderTypingPrompt />
       <InputArea />
-      <Reset /> <Refresh/>
+      <Reset /> <Refresh /> <ScoreCard />
     </div>
   );
 };

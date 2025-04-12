@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { endGame } from "../store/actions/gameActions";
-import { resetPrompt, resetTypedText } from "../store/actions/typingActions";
+import { resetGame } from "../store/actions/gameActions";
+import { resetCount, resetTypedText } from "../store/actions/typingActions";
 import * as Engine from "../utils/Engine";
 
 const Reset = () => {
@@ -8,15 +8,16 @@ const Reset = () => {
   const prompt = useSelector((state) => state.typing.prompt);
 
   const resetStore = () => {
-    dispatch(endGame());
-    console.log("stop");
-    dispatch(resetPrompt());
+    dispatch(resetGame());
     dispatch(resetTypedText());
+    dispatch(resetCount());
     Engine.evaluateTyping({
       typedText: "",
       promptText: prompt,
       gameStarted: false,
+      dispatch,
     });
+    console.log("game eneded");
   };
 
   return (

@@ -1,6 +1,8 @@
 const initialState = {
   typedText: "",
   prompt: [],
+  correctCount: 0,
+  mistakeCount: 0,
 };
 
 const typingReducer = (state = initialState, action) => {
@@ -22,6 +24,15 @@ const typingReducer = (state = initialState, action) => {
 
     case "RESET_PROMPT":
       return { ...state, prompt: [] };
+
+    case "INC_CORRECT_COUNT":
+      return { ...state, correctCount: state.correctCount + 1 };
+
+    case "INC_MISTAKE_COUNT":
+      return { ...state, mistakeCount: state.mistakeCount + 1 };
+
+    case "RESET_COUNT":
+      return { ...state, mistakeCount: 0, correctCount: 0 };
 
     default:
       return state;

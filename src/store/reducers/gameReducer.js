@@ -1,6 +1,7 @@
 const initialState = {
   gameStarted: false,
   startTime: null,
+  gameEnded: null,
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -8,8 +9,11 @@ const gameReducer = (state = initialState, action) => {
     case "START_GAME":
       return { ...state, gameStarted: true, startTime: action.payload };
 
-    case "END_GAME":
+    case "RESET_GAME":
       return { ...state, gameStarted: false, startTime: null };
+
+    case "END_GAME":
+      return { ...state, gameStarted: false, gameEnded: true };
 
     default:
       return state;

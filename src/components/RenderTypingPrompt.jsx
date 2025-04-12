@@ -1,13 +1,14 @@
-import { flattenWordsToChars } from "../utils/Helper";
+import { useSelector } from "react-redux";
 
-const RenderTypingPrompt = ({ words }) => {
+const RenderTypingPrompt = () => {
+  const prompt = useSelector((state) => state.typing.prompt);
+
   const renderSpans = () => {
-    const spans = flattenWordsToChars(words).map((char, index) => (
+    return prompt.map((char, index) => (
       <span id={`prompt-${index}`} key={index}>
         {char}
       </span>
     ));
-    return spans;
   };
 
   return <div>{renderSpans()}</div>;
