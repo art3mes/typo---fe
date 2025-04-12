@@ -35,7 +35,10 @@ const Refresh = () => {
   return (
     <div
       className="cursor-pointer px-4 py-2 bg-green-500 w-fit text-white rounded hover:bg-green-600"
-      onClick={resetPrompt}
+      onMouseDown={(e) => {
+        e.preventDefault(); // prevent blur
+        resetPrompt();
+      }}
     >
       Refresh
     </div>

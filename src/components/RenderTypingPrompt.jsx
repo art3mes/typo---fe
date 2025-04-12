@@ -1,17 +1,17 @@
 import { useSelector } from "react-redux";
 
-const RenderTypingPrompt = () => {
+const RenderTypingPrompt = ({ onClick }) => {
   const prompt = useSelector((state) => state.typing.prompt);
 
-  const renderSpans = () => {
-    return prompt.map((char, index) => (
-      <span id={`prompt-${index}`} key={index}>
-        {char}
-      </span>
-    ));
-  };
-
-  return <div>{renderSpans()}</div>;
+  return (
+    <div className="cursor-text select-none" onClick={onClick}>
+      {prompt.map((char, index) => (
+        <span id={`prompt-${index}`} key={index}>
+          {char}
+        </span>
+      ))}
+    </div>
+  );
 };
 
 export default RenderTypingPrompt;

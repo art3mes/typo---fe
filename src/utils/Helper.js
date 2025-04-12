@@ -18,10 +18,9 @@ export const highlightPromptChar = (index, type) => {
   if (!el) return;
 
   const highlightClasses = ["correct-char", "incorrect-char", "current-char"];
-
   el.classList.remove(...highlightClasses);
 
-  if (type && type !== "reset" && highlightClasses.includes(`${type}-char`)) {
+  if (type && type !== "reset") {
     el.classList.add(`${type}-char`);
   }
 };
@@ -40,4 +39,12 @@ export const calculateWPM = (charCount, startTime) => {
   const wpm = wordsTyped / elapsedTimeInMinutes;
 
   return Math.round(wpm);
+};
+
+export const calculateAccuracy = (correctCount, errorCount) => {
+  console.log(correctCount, errorCount);
+  if (correctCount > 0)
+    return Math.round((correctCount / (correctCount + errorCount)) * 100);
+
+  return 0;
 };

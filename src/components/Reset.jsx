@@ -23,7 +23,10 @@ const Reset = () => {
   return (
     <div
       className="cursor-pointer px-4 py-2 bg-red-500 w-fit text-white rounded hover:bg-red-600"
-      onClick={() => resetStore()}
+      onMouseDown={(e) => {
+        e.preventDefault(); // prevent blur
+        resetStore();
+      }}
     >
       Reset
     </div>

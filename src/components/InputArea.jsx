@@ -1,29 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
-import { appendChar, removeLastChar } from "../store/actions/typingActions";
+import { appendChar } from "../store/actions/typingActions";
 import * as Engine from "../utils/Engine";
 import { startGame } from "../store/actions/gameActions";
+import React, { forwardRef } from "react";
 
-const InputArea = () => {
+const InputArea = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const typedText = useSelector((state) => state.typing.typedText);
   const prompt = useSelector((state) => state.typing.prompt);
   const startTime = useSelector((state) => state.game.startTime);
+  const gameEnded = useSelector((state) => state.game.gameEnded);
 
   const handleKeyDown = (e) => {
+    if (gameEnded) return;
+
     if (!startTime) {
       dispatch(startGame());
     }
-    console.log(startTime);
-    console.log("game started");
-    if (e.key === "Backspace") {
-      dispatch(removeLastChar());
 
-      Engine.evaluateTyping({
-        typedText: typedText.slice(0, -1),
-        promptText: prompt,
-        gameStarted: true,
-        dispatch,
-      });
+    if (e.key === "Backspace") {
+      e.preventDefault();
     } else if (e.key.length === 1) {
       const updatedText = typedText + e.key;
       dispatch(appendChar(e.key));
@@ -38,17 +34,15 @@ const InputArea = () => {
   };
 
   return (
-    <div className="p-4">
-      <textarea
-        className="w-full h-40 p-2 border border-gray-300 rounded"
-        value={typedText}
-        onKeyDown={handleKeyDown}
-        onChange={() => {}}
-        placeholder="Type something..."
-        autoFocus
-      />
-    </div>
+    <textarea
+      ref={ref}
+      value={typedText}
+      onKeyDown={handleKeyDown}
+      onChange={() => {}}
+      autoFocus
+      className="absolute opacity-0 w-0 h-0 pointer-events-none"
+    />
   );
-};
+});
 
 export default InputArea;
