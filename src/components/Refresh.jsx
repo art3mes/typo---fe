@@ -21,11 +21,9 @@ const Refresh = () => {
       gameStarted: false,
       dispatch,
     });
-    console.log("game refreshed");
   };
 
   const resetPrompt = () => {
-    console.log("reset");
     const words = RandomWordsGenerator();
     const promptChars = flattenWordsToChars(words);
     dispatch(setPrompt(promptChars));

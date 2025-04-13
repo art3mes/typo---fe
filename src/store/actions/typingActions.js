@@ -1,4 +1,15 @@
-import { APPEND_CHAR, INC_CORRECT_COUNT, INC_MISTAKE_COUNT, REMOVE_LAST_CHAR, RESET_COUNT, RESET_PROMPT, RESET_TYPED_TEXT, SET_PROMPT, SET_TYPED_TEXT, SET_WPM } from "../../utils/constants";
+import {
+  APPEND_CHAR,
+  INC_CORRECT_COUNT,
+  INC_MISTAKE_COUNT,
+  REMOVE_LAST_CHAR,
+  RESET_COUNT,
+  RESET_PROMPT,
+  RESET_TYPED_TEXT,
+  SET_PROMPT,
+  SET_TYPED_TEXT,
+  SET_WPM,
+} from "../../utils/constants";
 
 export const setTypedText = (text) => ({
   type: SET_TYPED_TEXT,

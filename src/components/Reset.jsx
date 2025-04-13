@@ -17,7 +17,6 @@ const Reset = () => {
       gameStarted: false,
       dispatch,
     });
-    console.log("game ended");
   };
 
   return (

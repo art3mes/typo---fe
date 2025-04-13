@@ -7,9 +7,11 @@ import { toast } from "react-toastify";
 
 const InputArea = forwardRef((prop, ref) => {
   const dispatch = useDispatch();
-  const {startTime,gameEnded} = useSelector((state) => state.game);
-  const {roomId,userId} = useSelector((state) => state.room);
-  const {prompt,typedText,correctCount,mistakeCount} = useSelector((state) => state.typing);
+  const { startTime, gameEnded } = useSelector((state) => state.game);
+  const { roomId, userId } = useSelector((state) => state.room);
+  const { prompt, typedText, correctCount, mistakeCount } = useSelector(
+    (state) => state.typing,
+  );
 
   const handleKeyDown = (e) => {
     if (gameEnded) return;

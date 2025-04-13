@@ -1,5 +1,9 @@
-import { END_GAME, RESET_GAME, START_GAME } from "../../utils/constants";
-
+import {
+  END_GAME,
+  RESET_GAME,
+  START_GAME,
+  SET_DARK_MODE,
+} from "../../utils/constants";
 
 export const startGame = () => ({
   type: START_GAME,
@@ -12,4 +16,8 @@ export const resetGame = () => ({
 
 export const endGame = () => ({
   type: END_GAME,
+});
+
+export const setDarkMode = () => ({
+  type: SET_DARK_MODE,
 });

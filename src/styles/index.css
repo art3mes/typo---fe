@@ -12,11 +12,20 @@
   --color-secondary: #89aad3;
   --color-ternary: #cadaee;
   --color-light: #e8ebf2;
+
+  /*Dark Colors */
+  --color-dprimary: #1a3636;
+  --color-dsecondary: #40534c;
+  --color-dternary: #677d6a;
+  --color-dlight: #d6bd98;
 }
 
 html,
 body {
   @apply p-0 m-0 bg-[#4981cf] font-quicksand;
+}
+.dark {
+  @apply bg-dprimary;
 }
 
 .correct-char {

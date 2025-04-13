@@ -10,6 +10,7 @@ const RenderScoreCard = () => {
   const dispatch = useDispatch();
   const { correctCount, mistakeCount } = useSelector((state) => state.typing);
   const { startTime, gameEnded } = useSelector((state) => state.game);
+  const isDarkMode = useSelector((state) => state.game.darkMode);
   const { roomId, userId, users } = useSelector((state) => state.room);
 
   const [localWPM, setLocalWPM] = useState(null);
@@ -33,7 +34,6 @@ const RenderScoreCard = () => {
 
   useEffect(() => {
     //local metrics
-    console.log("gay")
     if (gameEnded && startTime && correctCount > 0) {
       const temp = calculateWPM(correctCount, startTime);
       setLocalWPM(temp);
@@ -41,12 +41,9 @@ const RenderScoreCard = () => {
 
     setAccuracy(calculateAccuracy(correctCount, mistakeCount));
     if (roomId && userId) {
-      console.log("render score card: ",correctCount, mistakeCount);
       socket.on(
         SOCKET_EVENTS.TYPING_METRICS_UPDATE,
         ({ userId, correctCount, mistakeCount, accuracy }) => {
-          console.log("recieved data from socket typing update: ", userId, correctCount, mistakeCount, accuracy);
-          
           setPlayersMetrics((prev) => ({
             ...prev,
             [userId]: { correctCount, mistakeCount, accuracy },
@@ -57,7 +54,6 @@ const RenderScoreCard = () => {
       socket.on(
         SOCKET_EVENTS.END_GAME,
         ({ userId, correctCount, mistakeCount, accuracy, wpm }) => {
-          console.log("endgame recieceid data: ",userId, correctCount, mistakeCount, accuracy, wpm);
           setPlayersMetrics((prev) => ({
             ...prev,
             [userId]: { correctCount, mistakeCount, accuracy, wpm },
@@ -81,23 +77,25 @@ const RenderScoreCard = () => {
   ]);
 
   return (
-    <div className="">
+    <div
+      className={classNames("mb-4", {
+        "text-dlight": isDarkMode,
+      })}
+    >
       {roomId ? (
-          <div
-            className={classNames("gap-4 flex flex-row")}
-          >
-            {Object.entries(playersMetrics).map(([id, metrics]) => (
-              <ScoreCard
-                key={id}
-                id={id}
-                correctCount={metrics.correctCount}
-                mistakeCount={metrics.mistakeCount}
-                accuracy={metrics.accuracy}
-                wpm={metrics.wpm}
-                icon="live"
-              />
-            ))}
-          </div>
+        <div className={classNames("gap-4 flex flex-row")}>
+          {Object.entries(playersMetrics).map(([id, metrics]) => (
+            <ScoreCard
+              key={id}
+              id={id}
+              correctCount={metrics.correctCount}
+              mistakeCount={metrics.mistakeCount}
+              accuracy={metrics.accuracy}
+              wpm={metrics.wpm}
+              icon="live"
+            />
+          ))}
+        </div>
       ) : (
         <div className="">
           <ScoreCard

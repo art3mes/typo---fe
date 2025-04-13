@@ -7,13 +7,15 @@ import RenderImage from "../utils/RenderImage";
 import { SOCKET_EVENTS } from "../utils/constants";
 import { startGame } from "../store/actions/gameActions";
 import { setUsers } from "../store/actions/roomActions";
+import classNames from "classnames";
 
 const Lobby = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const { roomId, users, userId } = useSelector((state) => state.room);
-  console.log("users", users);
+  const isDarkMode = useSelector((state) => state.game.darkMode);
+
   useEffect(() => {
     if (users.length === 0) {
       navigate("/");
@@ -22,10 +24,8 @@ const Lobby = () => {
 
   useEffect(() => {
     socket.on(SOCKET_EVENTS.USER_JOINED, ({ userId }) => {
-      console.log(`${userId} joined`);
       toast(`Player ${userId} has joined the room!`);
       const updatedList = [...users, { username: userId }];
-      console.log("updated list", updatedList);
       dispatch(setUsers(updatedList));
     });
 
@@ -48,15 +48,26 @@ const Lobby = () => {
   };
 
   const handleStartGame = () => {
-    console.log("game started emitting");
     socket.emit(SOCKET_EVENTS.START_GAME, { roomId, userId });
   };
 
   return (
-    <div className="flex flex-col w-[30%] bg-ternary shadow-lg justify-center rounded-md  space-y-6 mt-12 py-12 px-6">
+    <div
+      className={classNames(
+        "flex flex-col w-fit shadow-lg justify-center rounded-md space-y-6 mt-12 py-12 px-6",
+        {
+          "bg-ternary": !isDarkMode,
+          "bg-dternary text-dlight": isDarkMode,
+        },
+      )}
+    >
       <div className="flex flex-col">
         <div className="font-bold">room:</div>
-        <div className="text-2xl flex flex-row items-center gap-2 ">
+        <div
+          className={classNames("text-2xl flex flex-row items-center gap-2 ", {
+            "text-white": isDarkMode,
+          })}
+        >
           {roomId}{" "}
           <button onClick={handleCopyRoomId} className=" cursor-pointer">
             {copied ? (
@@ -74,24 +85,54 @@ const Lobby = () => {
           {users.map((user, index) => (
             <div
               key={user.username}
-              className="border-2 my-2 cursor-pointer flex flex-row gap-2 rounded-md border-primary bg-white "
+              className={classNames(
+                "my-2 cursor-pointer flex flex-row gap-2 rounded-md",
+                {
+                  "border-2 border-primary bg-white": !isDarkMode,
+                  "border-2 border-dprimary bg-dprimary": isDarkMode,
+                },
+              )}
             >
-              <span className="bg-primary flex items-center justify-center w-6 text-white">
+              <span
+                className={classNames(
+                  "flex items-center justify-center w-6 text-white",
+                  {
+                    "bg-primary": !isDarkMode,
+                    "bg-dprimary": isDarkMode,
+                  },
+                )}
+              >
                 {index + 1}.
               </span>{" "}
-              <span className="font-semibold text-primary text-lg leading-10">
+              <span
+                className={classNames("font-semibold text-lg leading-10", {
+                  "text-primary": !isDarkMode,
+                  "text-dlight": isDarkMode,
+                })}
+              >
                 {user.username}
               </span>
             </div>
           ))}
         </ul>
-        <p className="text-sm text-gray-500 mt-3">
+        <p
+          className={classNames("text-sm mt-3", {
+            "text-gray-500": !isDarkMode,
+            "text-dlight": isDarkMode,
+          })}
+        >
           {users.length}/5 players in room (More the Merrier!)
         </p>
       </div>
 
       <button
-        className="bg-primary cursor-pointer text-white px-5 py-2 rounded-md shadow-md hover:bg-secondary hover:text-primary transition duration-300"
+        className={classNames(
+          "cursor-pointer text-white px-5 py-2 rounded-md shadow-md transition duration-300",
+          {
+            "bg-primary hover:bg-secondary hover:text-primary": !isDarkMode,
+            "bg-dprimary hover:bg-dsecondary hover:text-dprimary": isDarkMode,
+          },
+        )}
         onClick={handleStartGame}
       >
         Start Game

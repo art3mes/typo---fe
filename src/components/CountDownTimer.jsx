@@ -6,6 +6,7 @@ import { endGame } from "../store/actions/gameActions";
 import { setWPM } from "../store/actions/typingActions";
 import { SOCKET_EVENTS } from "../utils/constants";
 import { calculateAccuracy, calculateWPM } from "../utils/Helper";
+import classNames from "classnames";
 
 const CountdownTimer = ({ duration = 30 }) => {
   const dispatch = useDispatch();
@@ -14,6 +15,8 @@ const CountdownTimer = ({ duration = 30 }) => {
   const [timeLeft, setTimeLeft] = useState(duration);
 
   const { startTime } = useSelector((state) => state.game);
+  const isDarkMode = useSelector((state) => state.game.darkMode);
+
   const { roomId, userId } = useSelector((state) => state.room);
   const { correctCount, mistakeCount } = useSelector((state) => state.typing);
 
@@ -57,14 +60,34 @@ const CountdownTimer = ({ duration = 30 }) => {
     intervalRef.current = setInterval(updateTimeLeft, 1000);
 
     return () => clearInterval(intervalRef.current);
-  }, [startTime, duration, dispatch, roomId, userId, correctCount, mistakeCount]);
+  }, [
+    startTime,
+    duration,
+    dispatch,
+    roomId,
+    userId,
+    correctCount,
+    mistakeCount,
+  ]);
 
   return (
-    <div className="flex flex-col w-36 px-4">
+    <div
+      className={classNames("flex flex-col w-36 px-4", {
+        "text-black": !isDarkMode,
+        "text-white": isDarkMode,
+      })}
+    >
       <span>Time left</span>
       <div className="flex flex-row items-end">
         <span className="font-pixelify text-xl mb-2">s</span>
-        <span className="text-9xl text-ternary">{timeLeft}</span>
+        <span
+          className={classNames("text-9xl", {
+            "text-ternary": !isDarkMode,
+            "text-dlight": isDarkMode,
+          })}
+        >
+          {timeLeft}
+        </span>
       </div>
     </div>
   );

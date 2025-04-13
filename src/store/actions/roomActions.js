@@ -1,4 +1,9 @@
-import { CREATE_ROOM, JOIN_ROOM, LEAVE_ROOM, SET_USERS } from "../../utils/constants";
+import {
+  CREATE_ROOM,
+  JOIN_ROOM,
+  LEAVE_ROOM,
+  SET_USERS,
+} from "../../utils/constants";
 
 export const createRoom = (roomId, userId) => ({
   type: CREATE_ROOM,

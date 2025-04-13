@@ -8,6 +8,8 @@ import reset from "../assets/reset.png";
 import copy from "../assets/copy.png";
 import tick from "../assets/tick.png";
 import offline from "../assets/offline.png";
+import github from "../assets/github.png";
+import linkedin from "../assets/linkedin.png";
 
 const imageMap = {
   darkMode: darkIcon,
@@ -19,6 +21,8 @@ const imageMap = {
   copy,
   tick,
   offline,
+  github,
+  linkedin,
 };
 
 const RenderImage = ({ name, className = "", alt = "" }) => {

@@ -1,10 +1,10 @@
 export const SOCKET_EVENTS = {
-    JOIN_ROOM: "join-room",
-    TYPING_UPDATE: "typing-update",
-    START_GAME: "start-game",
-    END_GAME: "end-game",
-    TYPING_METRICS_UPDATE: "typing-metrics-update",
-    USER_JOINED: "user-joined",
+  JOIN_ROOM: "join-room",
+  TYPING_UPDATE: "typing-update",
+  START_GAME: "start-game",
+  END_GAME: "end-game",
+  TYPING_METRICS_UPDATE: "typing-metrics-update",
+  USER_JOINED: "user-joined",
 };
 
 export const COUNTDOWN = 15;
@@ -29,3 +29,4 @@ export const LEAVE_ROOM = "LEAVE_ROOM";
 export const START_GAME = "START_GAME";
 export const RESET_GAME = "RESET_GAME";
 export const END_GAME = "END_GAME";
+export const SET_DARK_MODE = "SET_DARK_MODE";

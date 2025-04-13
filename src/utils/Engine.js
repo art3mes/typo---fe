@@ -54,14 +54,6 @@ export const evaluateTyping = ({
 
   if (roomId && userId) {
     const accuracy = calculateAccuracy(updatedCorrect, updatedIncorrect);
-    console.log(
-      "sending data to socket",
-      roomId,
-      userId,
-      updatedCorrect,
-      updatedIncorrect,
-      accuracy,
-    );
     socket.emit(SOCKET_EVENTS.TYPING_UPDATE, {
       roomId,
       userId,

@@ -2,6 +2,7 @@ const initialState = {
   gameStarted: false,
   startTime: null,
   gameEnded: false,
+  darkMode: false,
 };
 
 const gameReducer = (state = initialState, action) => {
@@ -19,6 +20,9 @@ const gameReducer = (state = initialState, action) => {
 
     case "END_GAME":
       return { ...state, gameStarted: false, gameEnded: true };
+
+    case "SET_DARK_MODE":
+      return { ...state, darkMode: !state.darkMode };
 
     default:
       return state;
