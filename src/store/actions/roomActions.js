@@ -2,6 +2,7 @@ import {
   CREATE_ROOM,
   JOIN_ROOM,
   LEAVE_ROOM,
+  RESET_ROOM_STATE,
   SET_USERS,
 } from "../../utils/constants";
 
@@ -22,4 +23,8 @@ export const setUsers = (users) => ({
 
 export const leaveRoom = () => ({
   type: LEAVE_ROOM,
+});
+
+export const resetRoomState = () => ({
+  type: RESET_ROOM_STATE,
 });

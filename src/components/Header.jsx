@@ -1,11 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import RenderImage from "../utils/RenderImage";
-import { setDarkMode } from "../store/actions/gameActions";
+import { resetGameState, setDarkMode } from "../store/actions/gameActions";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
+import { resetRoomState } from "../store/actions/roomActions";
+import { resetTypingState } from "../store/actions/typingActions";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const isDarkMode = useSelector((state) => state.game.darkMode);
+
+  const handleHome = () => {
+    dispatch(resetGameState());
+    dispatch(resetRoomState());
+    dispatch(resetTypingState());
+    navigate("/");
+  };
 
   const changeTheme = () => {
     dispatch(setDarkMode(!isDarkMode));
@@ -36,9 +48,17 @@ const Header = () => {
           A realtime typing competition app
         </div>
       </div>
-      <span className="cursor-pointer" onClick={changeTheme}>
-        <RenderImage name="darkMode" />
-      </span>
+      <div className="flex flex-row gap-6 items-center">
+        <span
+          className="text-xl cursor-pointer pr-6 border-r-2"
+          onClick={handleHome}
+        >
+          Home
+        </span>
+        <span className="cursor-pointer pr-2" onClick={changeTheme}>
+          <RenderImage name="darkMode" />
+        </span>
+      </div>
     </div>
   );
 };

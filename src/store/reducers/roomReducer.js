@@ -27,6 +27,13 @@ const roomReducer = (state = initialState, action) => {
         users: [],
       };
 
+    case "RESET_ROOM_STATE":
+      return {
+        roomId: null,
+        userId: null,
+        users: [],
+      };
+
     default:
       return state;
   }

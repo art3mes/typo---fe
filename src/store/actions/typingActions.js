@@ -6,6 +6,7 @@ import {
   RESET_COUNT,
   RESET_PROMPT,
   RESET_TYPED_TEXT,
+  RESET_TYPING_STATE,
   SET_PROMPT,
   SET_TYPED_TEXT,
   SET_WPM,
@@ -52,4 +53,8 @@ export const resetCount = () => ({
 
 export const setWPM = () => ({
   type: SET_WPM,
+});
+
+export const resetTypingState = () => ({
+  type: RESET_TYPING_STATE,
 });

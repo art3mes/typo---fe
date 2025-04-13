@@ -15,6 +15,7 @@ const Lobby = () => {
   const [copied, setCopied] = useState(false);
   const { roomId, users, userId } = useSelector((state) => state.room);
   const isDarkMode = useSelector((state) => state.game.darkMode);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (users.length === 0) {
@@ -31,6 +32,7 @@ const Lobby = () => {
 
     socket.on(SOCKET_EVENTS.START_GAME, () => {
       dispatch(startGame());
+      setIsLoading(false);
       navigate("/game");
       toast("Game has started!");
     });
@@ -48,6 +50,7 @@ const Lobby = () => {
   };
 
   const handleStartGame = () => {
+    setIsLoading(true);
     socket.emit(SOCKET_EVENTS.START_GAME, { roomId, userId });
   };
 
@@ -127,12 +130,13 @@ const Lobby = () => {
 
       <button
         className={classNames(
-          "cursor-pointer text-white px-5 py-2 rounded-md shadow-md transition duration-300",
+          "cursor-pointer text-white px-5 py-2 rounded-md shadow-md transition duration-300 disabled:cursor-not-allowed",
           {
             "bg-primary hover:bg-secondary hover:text-primary": !isDarkMode,
             "bg-dprimary hover:bg-dsecondary hover:text-dprimary": isDarkMode,
           },
         )}
+        disabled={isLoading}
         onClick={handleStartGame}
       >
         Start Game

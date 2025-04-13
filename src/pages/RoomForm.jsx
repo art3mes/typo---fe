@@ -12,6 +12,7 @@ const RoomForm = () => {
   const [username, setUsername] = useState("");
   const [roomName, setRoomName] = useState("");
   const [isCreating, setIsCreating] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const isDarkMode = useSelector((state) => state.game.darkMode);
 
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const RoomForm = () => {
     e.preventDefault();
     if (!username || !roomName) return;
 
+    setIsLoading(true);
     const socketId = socket.id;
     try {
       let res;
@@ -45,6 +47,8 @@ const RoomForm = () => {
       navigate("/lobby");
     } catch (err) {
       toast.warn(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,7 +105,7 @@ const RoomForm = () => {
 
         <button
           className={classNames(
-            "cursor-pointer px-5 py-2 rounded-md shadow-md transition duration-300",
+            "cursor-pointer px-5 py-2 rounded-md shadow-md transition duration-300 disabled:cursor-not-allowed",
             {
               "bg-primary text-white hover:bg-secondary hover:text-primary":
                 !isDarkMode,
@@ -109,6 +113,7 @@ const RoomForm = () => {
                 isDarkMode,
             },
           )}
+          disabled={isLoading}
           type="submit"
         >
           {isCreating ? "Create" : "Join"}

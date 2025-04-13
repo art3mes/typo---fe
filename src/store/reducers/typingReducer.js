@@ -38,6 +38,16 @@ const typingReducer = (state = initialState, action) => {
     case "SET_WPM":
       return { ...state, wpm: action.payload };
 
+    case "RESET_TYPING_STATE":
+      return {
+        ...state,
+        typedText: "",
+        prompt: [],
+        correctCount: 0,
+        mistakeCount: 0,
+        wpm: 0,
+      };
+
     default:
       return state;
   }

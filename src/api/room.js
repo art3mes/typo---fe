@@ -11,7 +11,8 @@ const handleRoomRequest = async (endpoint, username, socketId, roomName) => {
     });
     return res.data;
   } catch (err) {
-    throw `Failed to ${endpoint === "create" ? "create" : "join"} room.`;
+    console.log(err);
+    throw err?.response?.data?.message;
   }
 };
 

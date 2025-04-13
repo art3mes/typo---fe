@@ -4,7 +4,7 @@ import {
   resetTypedText,
   setPrompt,
 } from "../store/actions/typingActions";
-import { resetGame } from "../store/actions/gameActions";
+import { resetGameState } from "../store/actions/gameActions";
 import * as Engine from "../utils/Engine";
 import { flattenWordsToChars } from "../utils/Helper";
 import RandomWordsGenerator from "../utils/RandomWordsGenerator";
@@ -12,7 +12,7 @@ import RandomWordsGenerator from "../utils/RandomWordsGenerator";
 const Refresh = () => {
   const dispatch = useDispatch();
   const resetStore = (promptChars) => {
-    dispatch(resetGame());
+    dispatch(resetGameState());
     dispatch(resetTypedText());
     dispatch(resetCount());
     Engine.evaluateTyping({

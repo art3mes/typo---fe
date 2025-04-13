@@ -10,19 +10,19 @@ const gameReducer = (state = initialState, action) => {
     case "START_GAME":
       return { ...state, gameStarted: true, startTime: action.payload };
 
-    case "RESET_GAME":
+    case "END_GAME":
+      return { ...state, gameStarted: false, gameEnded: true };
+
+    case "SET_DARK_MODE":
+      return { ...state, darkMode: !state.darkMode };
+
+    case "RESET_GAME_STATE":
       return {
         ...state,
         gameStarted: false,
         startTime: null,
         gameEnded: false,
       };
-
-    case "END_GAME":
-      return { ...state, gameStarted: false, gameEnded: true };
-
-    case "SET_DARK_MODE":
-      return { ...state, darkMode: !state.darkMode };
 
     default:
       return state;
