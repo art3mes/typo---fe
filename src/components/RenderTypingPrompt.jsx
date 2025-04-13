@@ -5,7 +5,7 @@ const RenderTypingPrompt = ({ onClick }) => {
 
   return (
     <div
-      className="cursor-text select-none font-mono text-[#305485]  text-2xl"
+      className="cursor-text select-none font-mono text-[#305485] text-2xl"
       onClick={onClick}
     >
       {prompt.map((char, index) => (

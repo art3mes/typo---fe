@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
-import RandomWordsGenerator from "../utils/RandomWordsGenerator";
 import {
   resetCount,
   resetTypedText,
   setPrompt,
 } from "../store/actions/typingActions";
-import { flattenWordsToChars } from "../utils/Helper";
 import { resetGame } from "../store/actions/gameActions";
 import * as Engine from "../utils/Engine";
+import { flattenWordsToChars } from "../utils/Helper";
+import RandomWordsGenerator from "../utils/RandomWordsGenerator";
 
 const Refresh = () => {
   const dispatch = useDispatch();

@@ -5,6 +5,7 @@ import socket from "../socket/socket";
 import { useDispatch } from "react-redux";
 import { createRoom, joinRoom, setUsers } from "../store/actions/roomActions";
 import { createRoomAPI, joinRoomAPI } from "../api/room";
+import { SOCKET_EVENTS } from "../utils/constants";
 
 const RoomForm = () => {
   const [username, setUsername] = useState("");
@@ -19,7 +20,6 @@ const RoomForm = () => {
     if (!username || !roomName) return;
 
     const socketId = socket.id;
-
     try {
       let res;
       if (isCreating) {
@@ -37,9 +37,9 @@ const RoomForm = () => {
         dispatch(setUsers(userList));
         toast(`You have joined ${roomName} room.`);
       }
-      socket.emit("join-room", { roomId: roomName, userId: username });
+      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { roomId: roomName, userId: username });
       navigate("/lobby");
-      
+
     } catch (err) {
       console.log(err);
       toast.warn(err);

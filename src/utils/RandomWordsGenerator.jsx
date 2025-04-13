@@ -1,6 +1,6 @@
+import { DEFAULT_WORD_COUNT } from "./constants";
 import { wordStore } from "./wordStore";
 
-const DEFAULT_WORD_COUNT = 60;
 
 const RandomWordsGenerator = (count = DEFAULT_WORD_COUNT) => {
   const arr = [...wordStore];

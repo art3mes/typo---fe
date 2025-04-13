@@ -8,7 +8,7 @@ const StatBox = ({ value, label, color }) => (
 );
 
 const ScoreCard = ({
-  id = "Yourself",
+  id = "YOU",
   correctCount,
   mistakeCount,
   accuracy,
@@ -16,8 +16,6 @@ const ScoreCard = ({
   icon,
 }) => {
   let conditionalWPM = wpm ?? 0;
-  console.log("score card", conditionalWPM)
-
   return (
     <div className="flex p-6 min-w-[200px] w-fit bg-ternary rounded-md shadow-md relative  cursor-pointer">
       <div className="flex flex-col gap-2">

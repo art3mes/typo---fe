@@ -1,6 +1,5 @@
 export const flattenWordsToChars = (words) => {
   const chars = [];
-
   words.forEach((word, index) => {
     for (let char of word) {
       chars.push(char);
@@ -9,7 +8,6 @@ export const flattenWordsToChars = (words) => {
       chars.push(" ");
     }
   });
-
   return chars;
 };
 

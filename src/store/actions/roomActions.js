@@ -1,7 +1,4 @@
-export const CREATE_ROOM = "CREATE_ROOM";
-export const JOIN_ROOM = "JOIN_ROOM";
-export const SET_USERS = "SET_USERS";
-export const LEAVE_ROOM = "LEAVE_ROOM";
+import { CREATE_ROOM, JOIN_ROOM, LEAVE_ROOM, SET_USERS } from "../../utils/constants";
 
 export const createRoom = (roomId, userId) => ({
   type: CREATE_ROOM,

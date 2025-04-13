@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
+import { Bounce, ToastContainer } from "react-toastify";
 import RoomForm from "./pages/RoomForm";
 import Lobby from "./pages/Lobby";
 import Game from "./pages/Game";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { Bounce, ToastContainer } from "react-toastify";
 
 const App = () => {
   return (

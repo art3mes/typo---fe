@@ -1,14 +1,13 @@
 import { useDispatch } from "react-redux";
-import { flattenWordsToChars } from "../utils/Helper";
-import RandomWordsGenerator from "../utils/RandomWordsGenerator";
+import { useEffect, useRef, useState } from "react";
 import CountdownTimer from "./CountDownTimer";
 import InputArea from "./InputArea";
-import RenderTypingPrompt from "./RenderTypingPrompt";
-import Reset from "./Reset";
-import { setPrompt } from "../store/actions/typingActions";
-import Refresh from "./Refresh";
 import ScoreCard from "./RenderScoreCard";
-import { useEffect, useRef, useState } from "react";
+import RenderTypingPrompt from "./RenderTypingPrompt";
+import { setPrompt } from "../store/actions/typingActions";
+import { COUNTDOWN } from "../utils/constants";
+import { flattenWordsToChars } from "../utils/Helper";
+import RandomWordsGenerator from "../utils/RandomWordsGenerator";
 
 const TypingArea = () => {
   const dispatch = useDispatch();
@@ -46,7 +45,7 @@ const TypingArea = () => {
     <div className="flex flex-col items-center gap-10 w-[90%]">
       <div className="flex flex-row gap-4">
         <div className="">
-          <CountdownTimer duration={15} />
+          <CountdownTimer duration={COUNTDOWN} />
         </div>
         <div
           onMouseDown={handlePromptMouseDown}

@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { startGame } from "../store/actions/gameActions";
 import { useNavigate } from "react-router-dom";
 import socket from "../socket/socket";
 import RenderImage from "../utils/RenderImage";
-import { toast } from "react-toastify";
+import { SOCKET_EVENTS } from "../utils/constants";
+import { startGame } from "../store/actions/gameActions";
+import { setUsers } from "../store/actions/roomActions";
 
 const Lobby = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { roomId, users } = useSelector((state) => state.room);
-  const userId = useSelector((state) => state.room.userId);
   const [copied, setCopied] = useState(false);
+  const { roomId, users, userId } = useSelector((state) => state.room);
   console.log("users", users);
   useEffect(() => {
     if (users.length === 0) {
@@ -20,20 +21,23 @@ const Lobby = () => {
   }, [users, navigate]);
 
   useEffect(() => {
-    socket.on("user-joined", ({ userId }) => {
+    socket.on(SOCKET_EVENTS.USER_JOINED, ({ userId }) => {
       console.log(`${userId} joined`);
       toast(`Player ${userId} has joined the room!`);
+      const updatedList = [...users, { username: userId }];
+      console.log("updated list", updatedList);
+      dispatch(setUsers(updatedList));
     });
 
-    socket.on("start-game", () => {
+    socket.on(SOCKET_EVENTS.START_GAME, () => {
       dispatch(startGame());
       navigate("/game");
       toast("Game has started!");
     });
 
     return () => {
-      socket.off("user-joined");
-      socket.off("start-game");
+      socket.off(SOCKET_EVENTS.USER_JOINED);
+      socket.off(SOCKET_EVENTS.START_GAME);
     };
   }, [dispatch, navigate]);
 
@@ -45,7 +49,7 @@ const Lobby = () => {
 
   const handleStartGame = () => {
     console.log("game started emitting");
-    socket.emit("start-game", { roomId, userId });
+    socket.emit(SOCKET_EVENTS.START_GAME, { roomId, userId });
   };
 
   return (

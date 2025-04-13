@@ -9,20 +9,20 @@ import copy from "../assets/copy.png";
 import tick from "../assets/tick.png";
 import offline from "../assets/offline.png";
 
-const images = {
+const imageMap = {
   darkMode: darkIcon,
   create: createRoom,
   join: joinRoom,
-  live: live,
-  refresh: refresh,
-  reset: reset,
-  copy: copy,
-  tick: tick,
-  offline: offline,
+  live,
+  refresh,
+  reset,
+  copy,
+  tick,
+  offline,
 };
 
 const RenderImage = ({ name, className = "", alt = "" }) => {
-  const imgSrc = images[name];
+  const imgSrc = imageMap[name];
 
   if (!imgSrc) return null;
 

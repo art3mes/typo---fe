@@ -1,6 +1,5 @@
-export const START_GAME = "START_GAME";
-export const RESET_GAME = "RESET_GAME";
-export const END_GAME = "END_GAME";
+import { END_GAME, RESET_GAME, START_GAME } from "../../utils/constants";
+
 
 export const startGame = () => ({
   type: START_GAME,

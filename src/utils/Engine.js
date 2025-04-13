@@ -4,6 +4,7 @@ import {
   increaseMistakeCount,
 } from "../store/actions/typingActions";
 import socket from "../socket/socket";
+import { SOCKET_EVENTS } from "./constants";
 
 export const evaluateTyping = ({
   typedText,
@@ -61,7 +62,7 @@ export const evaluateTyping = ({
       updatedIncorrect,
       accuracy,
     );
-    socket.emit("typing-update", {
+    socket.emit(SOCKET_EVENTS.TYPING_UPDATE, {
       roomId,
       userId,
       correctCount: updatedCorrect,

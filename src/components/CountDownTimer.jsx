@@ -1,81 +1,63 @@
 import { useEffect, useState, useRef } from "react";
-import socket from "../socket/socket";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import socket from "../socket/socket";
 import { endGame } from "../store/actions/gameActions";
-import { calculateAccuracy, calculateWPM } from "../utils/Helper";
 import { setWPM } from "../store/actions/typingActions";
+import { SOCKET_EVENTS } from "../utils/constants";
+import { calculateAccuracy, calculateWPM } from "../utils/Helper";
 
 const CountdownTimer = ({ duration = 30 }) => {
-  const startTime = useSelector((state) => state.game.startTime);
-  const gameEnded = useSelector((state) => state.game.gameEnded);
-  const [timeLeft, setTimeLeft] = useState(duration);
-  const intervalRef = useRef(null);
   const dispatch = useDispatch();
-  const roomId = useSelector((state) => state.room.roomId);
-  const userId = useSelector((state) => state.room.userId);
-  const correctCount = useSelector((state) => state.typing.correctCount);
-  const mistakeCount = useSelector((state) => state.typing.mistakeCount);
+  const intervalRef = useRef(null);
+  const hasEndedRef = useRef(false);
+  const [timeLeft, setTimeLeft] = useState(duration);
+
+  const { startTime } = useSelector((state) => state.game);
+  const { roomId, userId } = useSelector((state) => state.room);
+  const { correctCount, mistakeCount } = useSelector((state) => state.typing);
 
   useEffect(() => {
-    if (startTime) {
-      const end = startTime + duration * 1000;
-
-      const updateTimeLeft = () => {
-        const remaining = Math.max(0, Math.floor((end - Date.now()) / 1000));
-        setTimeLeft(remaining);
-
-        if (remaining === 0) {
-          console.log("countdown game ended", gameEnded);
-          clearInterval(intervalRef.current);
-          dispatch(endGame());
-          toast("Game Ended!");
-
-          if (roomId && userId) {
-            const calculatedWPM = calculateWPM(correctCount, startTime);
-            console.log("emitting wpm for BE: ", calculatedWPM);
-
-            dispatch(setWPM(calculatedWPM));
-
-            console.log(
-              roomId,
-              userId,
-              calculatedWPM,
-              correctCount,
-              mistakeCount,
-              calculateAccuracy(correctCount, mistakeCount),
-            );
-            socket.emit("end-game", {
-              roomId,
-              userId,
-              wpm: calculatedWPM,
-              correctCount,
-              mistakeCount,
-              accuracy: calculateAccuracy(correctCount, mistakeCount),
-            });
-          }
-
-          console.log("game ended");
-          return () => {
-            socket.off("end-game");
-          };
-        }
-      };
-
-      updateTimeLeft();
-      intervalRef.current = setInterval(updateTimeLeft, 1000);
-    } else {
+    if (!startTime) {
       setTimeLeft(duration);
+      return;
     }
 
+    const endTime = startTime + duration * 1000;
+
+    const updateTimeLeft = () => {
+      const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+      setTimeLeft(remaining);
+
+      if (remaining === 0 && !hasEndedRef.current) {
+        clearInterval(intervalRef.current);
+        hasEndedRef.current = true;
+        dispatch(endGame());
+        toast("Game Ended!");
+
+        if (roomId && userId) {
+          const wpm = calculateWPM(correctCount, startTime);
+          const accuracy = calculateAccuracy(correctCount, mistakeCount);
+
+          dispatch(setWPM(wpm));
+
+          socket.emit(SOCKET_EVENTS.END_GAME, {
+            roomId,
+            userId,
+            wpm,
+            correctCount,
+            mistakeCount,
+            accuracy,
+          });
+        }
+      }
+    };
+
+    updateTimeLeft(); // Initialize immediately
+    intervalRef.current = setInterval(updateTimeLeft, 1000);
+
     return () => clearInterval(intervalRef.current);
-  }, [
-    duration,
-    dispatch,
-    roomId,
-    userId,
-    startTime,
-  ]);
+  }, [startTime, duration, dispatch, roomId, userId, correctCount, mistakeCount]);
 
   return (
     <div className="flex flex-col w-36 px-4">
