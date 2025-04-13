@@ -3,11 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { startGame } from "../store/actions/gameActions";
 import { useNavigate } from "react-router-dom";
 import socket from "../socket/socket";
+import RenderImage from "../utils/RenderImage";
+import { toast } from "react-toastify";
 
 const Lobby = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { roomId, users } = useSelector((state) => state.room);
+  const userId = useSelector((state) => state.room.userId);
   const [copied, setCopied] = useState(false);
   console.log("users", users);
   useEffect(() => {
@@ -19,12 +22,13 @@ const Lobby = () => {
   useEffect(() => {
     socket.on("user-joined", ({ userId }) => {
       console.log(`${userId} joined`);
-      // Don't update Redux users here. Let API handle it in RoomForm.
+      toast(`Player ${userId} has joined the room!`);
     });
 
     socket.on("start-game", () => {
       dispatch(startGame());
       navigate("/game");
+      toast("Game has started!");
     });
 
     return () => {
@@ -40,41 +44,50 @@ const Lobby = () => {
   };
 
   const handleStartGame = () => {
-    socket.emit("start-game", { roomId });
+    console.log("game started emitting");
+    socket.emit("start-game", { roomId, userId });
   };
 
   return (
-    <div className="flex flex-col items-center bg-ternary shadow-lg justify-center rounded-md  space-y-6 p-12">
-      <h2 className="text-2xl font-bold">
-        Room: <span className="">{roomId}</span>
-      </h2>
+    <div className="flex flex-col w-[30%] bg-ternary shadow-lg justify-center rounded-md  space-y-6 mt-12 py-12 px-6">
+      <div className="flex flex-col">
+        <div className="font-bold">room:</div>
+        <div className="text-2xl flex flex-row items-center gap-2 ">
+          {roomId}{" "}
+          <button onClick={handleCopyRoomId} className=" cursor-pointer">
+            {copied ? (
+              <RenderImage name="tick" />
+            ) : (
+              <RenderImage name="copy" className="!w-4 !h-4" />
+            )}
+          </button>
+        </div>
+      </div>
 
-      <button
-        className="px-4 py-2  rounded"
-        onClick={handleCopyRoomId}
-      >
-        {copied ? "Copied!" : "Copy Room ID"}
-      </button>
-
-      <div className="w-full max-w-md rounded-lg p-4 shadow">
-        <h3 className="text-xl font-semibold mb-2">Players Joined</h3>
-        <ul className="space-y-2">
+      <div className="w-full">
+        <h3 className="text-xl font-semibold mb-2">Players in Lobby:</h3>
+        <ul className="">
           {users.map((user, index) => (
-            <li
+            <div
               key={user.username}
-              className=" px-4 py-2 rounded text-sm"
+              className="border-2 my-2 cursor-pointer flex flex-row gap-2 rounded-md border-primary bg-white "
             >
-              {index + 1}. {user.username}
-            </li>
+              <span className="bg-primary flex items-center justify-center w-6 text-white">
+                {index + 1}.
+              </span>{" "}
+              <span className="font-semibold text-primary text-lg leading-10">
+                {user.username}
+              </span>
+            </div>
           ))}
         </ul>
-        <p className="text-sm text-gray-400 mt-3">
-          {users.length}/5 players in room
+        <p className="text-sm text-gray-500 mt-3">
+          {users.length}/5 players in room (More the Merrier!)
         </p>
       </div>
 
       <button
-        className="bg-primary text-white px-5 py-2 rounded-md shadow-md hover:bg-secondary hover:text-primary transition duration-300"
+        className="bg-primary cursor-pointer text-white px-5 py-2 rounded-md shadow-md hover:bg-secondary hover:text-primary transition duration-300"
         onClick={handleStartGame}
       >
         Start Game

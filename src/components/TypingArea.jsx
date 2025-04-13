@@ -7,7 +7,7 @@ import RenderTypingPrompt from "./RenderTypingPrompt";
 import Reset from "./Reset";
 import { setPrompt } from "../store/actions/typingActions";
 import Refresh from "./Refresh";
-import ScoreCard from "./ScoreCard";
+import ScoreCard from "./RenderScoreCard";
 import { useEffect, useRef, useState } from "react";
 
 const TypingArea = () => {
@@ -43,16 +43,20 @@ const TypingArea = () => {
   };
 
   return (
-    <div>
-      <CountdownTimer duration={15} />
-      <div
-        onMouseDown={handlePromptMouseDown}
-        className={`transition-all ${isFocused ? "opacity-100" : "opacity-50 blur-sm"}`}
-      >
-        <RenderTypingPrompt />
+    <div className="flex flex-col items-center gap-10 w-[90%]">
+      <div className="flex flex-row gap-4">
+        <div className="">
+          <CountdownTimer duration={15} />
+        </div>
+        <div
+          onMouseDown={handlePromptMouseDown}
+          className={`transition-all ${isFocused ? "opacity-100" : "opacity-70 blur-xs"}`}
+        >
+          <RenderTypingPrompt />
+        </div>
+        <InputArea ref={inputRef} />
       </div>
-      <InputArea ref={inputRef} />
-      <Reset /> <Refresh /> <ScoreCard />
+      <ScoreCard />
     </div>
   );
 };

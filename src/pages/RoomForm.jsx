@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import socket from "../socket/socket";
 import { useDispatch } from "react-redux";
 import { createRoom, joinRoom, setUsers } from "../store/actions/roomActions";
-import socket from "../socket/socket";
 import { createRoomAPI, joinRoomAPI } from "../api/room";
 
 const RoomForm = () => {
@@ -26,6 +27,7 @@ const RoomForm = () => {
         dispatch(createRoom(roomName, username));
         console.log(res?.user);
         dispatch(setUsers([res?.user]));
+        toast(`${roomName} room has been created`);
       } else {
         res = await joinRoomAPI(username, socketId, roomName);
         dispatch(joinRoom(roomName, username));
@@ -33,17 +35,14 @@ const RoomForm = () => {
           username: user.username,
         }));
         dispatch(setUsers(userList));
+        toast(`You have joined ${roomName} room.`);
       }
-      console.log(res);
-      // Set users from API response
-
-      // Now emit socket event after success
       socket.emit("join-room", { roomId: roomName, userId: username });
-
       navigate("/lobby");
+      
     } catch (err) {
       console.log(err);
-      alert(err.response?.data?.message || "Something went wrong!");
+      toast.warn(err);
     }
   };
 
@@ -75,18 +74,20 @@ const RoomForm = () => {
         />
 
         <button
-          className="bg-primary text-white px-5 py-2 rounded-md shadow-md hover:bg-secondary hover:text-primary transition duration-300"
+          className="bg-primary text-white cursor-pointer px-5 py-2 rounded-md shadow-md hover:bg-secondary hover:text-primary transition duration-300"
           type="submit"
         >
-          {isCreating ? "Create Room" : "Join Room"}
+          {isCreating ? "Create" : "Join"}
         </button>
       </form>
 
       <button
         onClick={() => setIsCreating(!isCreating)}
-        className="text-sm underline"
+        className="text-sm underline cursor-pointer"
       >
-        {isCreating ? "Join an existing room instead" : "Create a new room instead"}
+        {isCreating
+          ? "Join an existing room instead"
+          : "Create a new room instead"}
       </button>
     </div>
   );

@@ -1,114 +1,39 @@
-import { useDispatch, useSelector } from "react-redux";
-import { calculateAccuracy, calculateWPM } from "../utils/Helper";
-import { useEffect, useState } from "react";
-import socket from "../socket/socket";
-import { setWPM } from "../store/actions/typingActions";
+import RenderImage from "../utils/RenderImage";
 
-const ScoreCard = () => {
-  const dispatch = useDispatch();
-  const correctCount = useSelector((state) => state.typing.correctCount);
-  const mistakeCount = useSelector((state) => state.typing.mistakeCount);
-  const wpm = useSelector((state) => state.typing.wpm);
+const StatBox = ({ value, label, color }) => (
+  <div className={`flex items-end gap-1 ${color}`}>
+    <span className="text-3xl font-thin">{value}</span>
+    <span className="text-sm font-bold mb-0.5">{label}</span>
+  </div>
+);
 
-  const startTime = useSelector((state) => state.game.startTime);
-  const [localWPM, setLocalWPM] = useState(null);
-  const [showWPM, setShowWPM] = useState(false);
-  const gameEnded = useSelector((state) => state.game.gameEnded);
-  const [accuracy, setAccuracy] = useState(0);
-  const [playersMetrics, setPlayersMetrics] = useState({});
-
-  const roomId = useSelector((state) => state.room.roomId);
-  const userId = useSelector((state) => state.room.userId);
-
-  useEffect(() => {
-    //local metrics
-    if (gameEnded && startTime && correctCount > 0) {
-      const temp = calculateWPM(correctCount, startTime);
-      console.log("setting wpm: ", temp);
-      dispatch(setWPM(temp));
-      setLocalWPM(temp);
-      setShowWPM(true);
-    }
-    if (!startTime) {
-      setWPM(0);
-      setShowWPM(false);
-      setAccuracy(calculateAccuracy(0, 0));
-    }
-
-    setAccuracy(calculateAccuracy(correctCount, mistakeCount));
-
-    if (roomId && userId) {
-      socket.on(
-        "typing-metrics-update",
-        ({ userId, correctCount, mistakeCount, accuracy }) => {
-          setPlayersMetrics((prev) => ({
-            ...prev,
-            [userId]: { correctCount, mistakeCount, accuracy },
-          }));
-        },
-      );
-
-      socket.on(
-        "end-game",
-        ({ userId, correctCount, mistakeCount, accuracy, wpm }) => {
-          console.log(userId, correctCount, mistakeCount, accuracy, wpm);
-          setPlayersMetrics((prev) => ({
-            ...prev,
-            [userId]: { correctCount, mistakeCount, accuracy, wpm },
-          }));
-        },
-      );
-
-      return () => {
-        socket.off("typing-metrics-update");
-        socket.off("end-game");
-      };
-    }
-  }, [
-    gameEnded,
-    startTime,
-    correctCount,
-    mistakeCount,
-    roomId,
-    userId,
-    dispatch,
-  ]);
+const ScoreCard = ({
+  id = "Yourself",
+  correctCount,
+  mistakeCount,
+  accuracy,
+  wpm,
+  icon,
+}) => {
+  let conditionalWPM = wpm ?? 0;
+  console.log("score card", conditionalWPM)
 
   return (
-    <div className="text-white p-4">
-      {roomId ? (
-        <>
-          <h2 className="text-2xl font-bold mb-4">Live Typing Metrics</h2>
-          <ul className="space-y-2">
-            {Object.entries(playersMetrics).map(([id, metrics]) => (
-              <li key={id} className="bg-gray-800 p-3 rounded">
-                <p>
-                  <strong>User:</strong> {id}
-                </p>
-                <p>✅ Correct: {metrics.correctCount}</p>
-                <p>❌ Mistakes: {metrics.mistakeCount}</p>
-                <p>🎯 Accuracy: {metrics.accuracy}%</p>
-                {metrics.wpm && <p>⌚ WPM: {metrics.wpm}</p>}
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <>
-          <h2 className="text-2xl font-bold mb-4">Not Live Typing Metrics</h2>
-          <ul className="space-y-2">
-            <li className="bg-gray-800 p-3 rounded">
-              <p>
-                <strong>User:</strong> YOU
-              </p>
-              <p>✅ Correct: {correctCount}</p>
-              <p>❌ Mistakes: {mistakeCount}</p>
-              <p>🎯 Accuracy: {accuracy}%</p>
-              {showWPM && <p>⌚ WPM: {wpm ?? localWPM}</p>}
-            </li>
-          </ul>
-        </>
-      )}
+    <div className="flex p-6 min-w-[200px] w-fit bg-ternary rounded-md shadow-md relative  cursor-pointer">
+      <div className="flex flex-col gap-2">
+        <div className="text-3xl font-semibold">{id}</div>
+
+        <div className="grid grid-cols-2 gap-x-6 gap-y-4 mt-2">
+          <StatBox value={correctCount} label="hits" color="text-green-600" />
+          <StatBox value={mistakeCount} label="slips" color="text-[#FF0000]" />
+          <StatBox value={accuracy} label="acc%" color="text-primary" />
+          <StatBox value={conditionalWPM} label="wpm" color="text-primary" />
+        </div>
+      </div>
+
+      <div className="absolute right-2 top-2">
+        <RenderImage name={icon} />
+      </div>
     </div>
   );
 };

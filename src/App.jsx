@@ -4,6 +4,7 @@ import Lobby from "./pages/Lobby";
 import Game from "./pages/Game";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { Bounce, ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
@@ -14,6 +15,19 @@ const App = () => {
         <Route path="/lobby" element={<Lobby />} />
         <Route path="/game" element={<Game />} />
       </Routes>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
       <Footer />
     </div>
   );

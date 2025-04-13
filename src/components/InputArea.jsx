@@ -3,6 +3,7 @@ import { appendChar } from "../store/actions/typingActions";
 import * as Engine from "../utils/Engine";
 import { startGame } from "../store/actions/gameActions";
 import React, { forwardRef } from "react";
+import { toast } from "react-toastify";
 
 const InputArea = forwardRef((prop, ref) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const InputArea = forwardRef((prop, ref) => {
 
     if (e.key === "Backspace") {
       e.preventDefault();
+      toast.warn("There is no going back. Move forward!");
     } else if (e.key.length === 1) {
       const updatedText = typedText + e.key;
       dispatch(appendChar(e.key));

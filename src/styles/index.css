@@ -1,36 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=PT+Mono&family=Pixelify+Sans:wght@400..700&family=Quicksand:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 @import "tailwindcss";
 
 @theme {
-    /* Fonts */
-      --font-mono: 'PT Mono', monospace;
-      --font-pixelify: 'Pixelify Sans', sans-serif;
-      --font-quicksand: 'Quicksand', sans-serif;
-    
-      /* Colors */
-      --color-primary: #4981cf;
-      --color-secondary: #89aad3;
-      --color-ternary: #cadaee;
-      --color-light: #e8ebf2;
+  /* Fonts */
+  --font-mono: "Roboto Mono", monospace;
+  --font-pixelify: "Pixelify Sans", sans-serif;
+  --font-quicksand: "Quicksand", sans-serif;
+
+  /* Colors */
+  --color-primary: #4981cf;
+  --color-secondary: #89aad3;
+  --color-ternary: #cadaee;
+  --color-light: #e8ebf2;
 }
 
-
-html, body {
+html,
+body {
   @apply p-0 m-0 bg-[#4981cf] font-quicksand;
 }
 
 .correct-char {
-  color: green;
-  font-weight: bold;
+  @apply font-semibold text-white;
 }
 
 .incorrect-char {
-  color: red;
-  text-decoration: underline;
+  @apply text-[#FF0000] underline font-semibold;
 }
 
 .current-char {
-  position: relative;
+  @apply relative;
 }
 
 .current-char::after {
@@ -38,9 +36,9 @@ html, body {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 2px;
-  height: 1.2rem;
-  background-color: black;
+  width: 3px;
+  height: 1.9rem;
+  background-color: #e8ebf2;
   animation: blink 1s steps(1) infinite;
 }
 

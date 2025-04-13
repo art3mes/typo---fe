@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef } from "react";
+import socket from "../socket/socket";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { endGame } from "../store/actions/gameActions";
-import socket from "../socket/socket";
 import { calculateAccuracy, calculateWPM } from "../utils/Helper";
 import { setWPM } from "../store/actions/typingActions";
 
 const CountdownTimer = ({ duration = 30 }) => {
   const startTime = useSelector((state) => state.game.startTime);
+  const gameEnded = useSelector((state) => state.game.gameEnded);
   const [timeLeft, setTimeLeft] = useState(duration);
   const intervalRef = useRef(null);
   const dispatch = useDispatch();
@@ -14,7 +16,6 @@ const CountdownTimer = ({ duration = 30 }) => {
   const userId = useSelector((state) => state.room.userId);
   const correctCount = useSelector((state) => state.typing.correctCount);
   const mistakeCount = useSelector((state) => state.typing.mistakeCount);
-  const wpm = useSelector((state) => state.typing.wpm);
 
   useEffect(() => {
     if (startTime) {
@@ -25,8 +26,10 @@ const CountdownTimer = ({ duration = 30 }) => {
         setTimeLeft(remaining);
 
         if (remaining === 0) {
+          console.log("countdown game ended", gameEnded);
           clearInterval(intervalRef.current);
           dispatch(endGame());
+          toast("Game Ended!");
 
           if (roomId && userId) {
             const calculatedWPM = calculateWPM(correctCount, startTime);
@@ -71,14 +74,17 @@ const CountdownTimer = ({ duration = 30 }) => {
     dispatch,
     roomId,
     userId,
-    wpm,
-    mistakeCount,
     startTime,
-    correctCount,
   ]);
 
   return (
-    <div className="text-xl font-mono font-bold text-red-600">{timeLeft}s</div>
+    <div className="flex flex-col w-36 px-4">
+      <span>Time left</span>
+      <div className="flex flex-row items-end">
+        <span className="font-pixelify text-xl mb-2">s</span>
+        <span className="text-9xl text-ternary">{timeLeft}</span>
+      </div>
+    </div>
   );
 };
 
