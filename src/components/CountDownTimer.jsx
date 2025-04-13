@@ -72,7 +72,7 @@ const CountdownTimer = ({ duration = 30 }) => {
 
   return (
     <div
-      className={classNames("flex flex-col w-36 px-4", {
+      className={classNames("flex flex-col w-38 px-4", {
         "text-black": !isDarkMode,
         "text-white": isDarkMode,
       })}
