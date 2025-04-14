@@ -81,7 +81,7 @@ const RoomForm = () => {
                 isDarkMode,
             },
           )}
-          placeholder="Username"
+          placeholder="User Name"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
