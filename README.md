@@ -1,4 +1,4 @@
-# typo😔
+# typo
 
 > A realtime typing battle app — where speed meets chaos.
 
@@ -17,7 +17,7 @@
 
 ## 💡 What is it actually?
 
-**typo😔** is a realtime multiplayer typing competition app made with love and just a pinch of chaos.
+**typo** is a realtime multiplayer typing competition app made with love and just a pinch of chaos.
 
 Here's what it does:
 
