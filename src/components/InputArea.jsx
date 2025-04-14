@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
+import React, { forwardRef } from "react";
+import { toast } from "react-toastify";
 import { appendChar } from "../store/actions/typingActions";
 import * as Engine from "../utils/Engine";
 import { startGame } from "../store/actions/gameActions";
-import React, { forwardRef } from "react";
-import { toast } from "react-toastify";
 
 const InputArea = forwardRef((prop, ref) => {
   const dispatch = useDispatch();

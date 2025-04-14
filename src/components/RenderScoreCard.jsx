@@ -28,7 +28,6 @@ const RenderScoreCard = () => {
   useEffect(() => {
     if (resultsReceived === users.length && users.length > 0) {
       const winner = getWinner(playersMetrics);
-      console.log("🏁 Final Winner:", winner);
       setPlayersMetrics((prev) => {
         const updated = { ...prev };
         Object.keys(updated).forEach((id) => {

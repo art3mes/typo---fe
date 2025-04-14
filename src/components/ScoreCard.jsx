@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import RenderImage from "../utils/RenderImage";
 import classNames from "classnames";
+import RenderImage from "../utils/RenderImage";
 
 const StatBox = ({ value, label, color }) => (
   <div className={`flex items-end gap-1 ${color}`}>

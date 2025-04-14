@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import RenderImage from "../utils/RenderImage";
-import { resetGameState, setDarkMode } from "../store/actions/gameActions";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { resetRoomState } from "../store/actions/roomActions";
 import { resetTypingState } from "../store/actions/typingActions";
+import { resetGameState, setDarkMode } from "../store/actions/gameActions";
 
 const Header = () => {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
-import RenderImage from "../utils/RenderImage";
-import { useSelector } from "react-redux";
 import classNames from "classnames";
+import { useSelector } from "react-redux";
+import RenderImage from "../utils/RenderImage";
 
 const Footer = () => {
   const isDarkMode = useSelector((state) => state.game.darkMode);

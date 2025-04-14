@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import classNames from "classnames";
 import socket from "../socket/socket";
 import RenderImage from "../utils/RenderImage";
 import { SOCKET_EVENTS } from "../utils/constants";
 import { startGame } from "../store/actions/gameActions";
 import { setUsers } from "../store/actions/roomActions";
-import classNames from "classnames";
 import { checkObjectParameters } from "../utils/Helper";
 
 const Lobby = () => {

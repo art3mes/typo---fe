@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import classNames from "classnames";
 import { toast } from "react-toastify";
 import socket from "../socket/socket";
 import { endGame } from "../store/actions/gameActions";
 import { setWPM } from "../store/actions/typingActions";
 import { SOCKET_EVENTS } from "../utils/constants";
 import { calculateAccuracy, calculateWPM } from "../utils/Helper";
-import classNames from "classnames";
 
 const CountdownTimer = ({ duration = 30 }) => {
   const dispatch = useDispatch();
