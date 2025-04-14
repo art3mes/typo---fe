@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 const RenderTypingPrompt = ({ onClick }) => {
   const prompt = useSelector((state) => state.typing.prompt);
   const isDarkMode = useSelector((state) => state.game.darkMode);
+  
 
   return (
     <div

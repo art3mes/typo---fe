@@ -6,6 +6,7 @@ import {
 import socket from "../socket/socket";
 import { SOCKET_EVENTS } from "./constants";
 
+
 export const evaluateTyping = ({
   typedText,
   promptText,

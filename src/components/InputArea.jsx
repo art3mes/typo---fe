@@ -5,6 +5,7 @@ import { startGame } from "../store/actions/gameActions";
 import React, { forwardRef } from "react";
 import { toast } from "react-toastify";
 
+
 const InputArea = forwardRef((prop, ref) => {
   const dispatch = useDispatch();
   const { startTime, gameEnded } = useSelector((state) => state.game);

@@ -8,6 +8,7 @@ import { SOCKET_EVENTS } from "../utils/constants";
 import { calculateAccuracy, calculateWPM } from "../utils/Helper";
 import classNames from "classnames";
 
+
 const CountdownTimer = ({ duration = 30 }) => {
   const dispatch = useDispatch();
   const intervalRef = useRef(null);

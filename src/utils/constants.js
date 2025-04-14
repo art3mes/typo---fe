@@ -10,6 +10,7 @@ export const SOCKET_EVENTS = {
 export const COUNTDOWN = 60;
 export const DEFAULT_WORD_COUNT = 60;
 
+
 export const SET_TYPED_TEXT = "SET_TYPED_TEXT";
 export const APPEND_CHAR = "APPEND_CHAR";
 export const REMOVE_LAST_CHAR = "REMOVE_LAST_CHAR";

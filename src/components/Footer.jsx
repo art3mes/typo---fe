@@ -26,8 +26,9 @@ const Footer = () => {
       )}
     >
       <div className="text-lg font-medium">
-        Created desperately by <strong>Mohammad Ali</strong>, © 2025
+        Created by <strong>Mohammad Ali</strong>, © 2025
       </div>
+      
 
       <div className="flex space-x-4 items-center">
         <div

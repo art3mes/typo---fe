@@ -14,6 +14,7 @@ const roomReducer = (state = initialState, action) => {
         userId: action.payload.userId,
       };
 
+      
     case "SET_USERS":
       return {
         ...state,

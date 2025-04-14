@@ -17,6 +17,7 @@ export const setTypedText = (text) => ({
   payload: text,
 });
 
+
 export const setPrompt = (text) => ({
   type: SET_PROMPT,
   payload: text,

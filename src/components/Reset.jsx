@@ -6,6 +6,7 @@ import * as Engine from "../utils/Engine";
 const Reset = () => {
   const dispatch = useDispatch();
   const prompt = useSelector((state) => state.typing.prompt);
+  
 
   const resetStore = () => {
     dispatch(resetGameState());

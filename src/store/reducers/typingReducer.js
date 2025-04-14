@@ -22,6 +22,7 @@ const typingReducer = (state = initialState, action) => {
 
     case "RESET_TYPED_TEXT":
       return { ...state, typedText: "" };
+      
 
     case "RESET_PROMPT":
       return { ...state, prompt: [] };

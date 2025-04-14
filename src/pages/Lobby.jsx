@@ -37,6 +37,7 @@ const Lobby = () => {
       navigate("/game");
       toast("Game has started!");
     });
+    
 
     return () => {
       socket.off(SOCKET_EVENTS.USER_JOINED);

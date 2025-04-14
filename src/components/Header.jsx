@@ -42,7 +42,7 @@ const Header = () => {
             },
           )}
         >
-          typo<span>😔</span>
+          typo
         </div>
         <div className="text-3xl hidden md:flex">
           A realtime typing competition app
@@ -63,3 +63,4 @@ const Header = () => {
   );
 };
 export default Header;
+

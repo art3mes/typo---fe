@@ -9,6 +9,7 @@ const store = configureStore({
     game: gameReducer,
     room: roomReducer,
   },
+  
 });
 
 export default store;

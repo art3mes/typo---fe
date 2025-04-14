@@ -9,6 +9,7 @@ import * as Engine from "../utils/Engine";
 import { flattenWordsToChars } from "../utils/Helper";
 import RandomWordsGenerator from "../utils/RandomWordsGenerator";
 
+
 const Refresh = () => {
   const dispatch = useDispatch();
   const resetStore = (promptChars) => {
