@@ -24,7 +24,6 @@ Here's what it does:
 - 🕹️ Once the room creator hits **Start**, a **60-second countdown** begins.
 - ⌨️ Players type their hearts out while metrics like **correct letters**, **mistakes**, **accuracy**, and **WPM** update in realtime using Socket.IO.
 - 🏆 At the end of the countdown, the player with the **highest WPM** gets bragging rights as the winner.
-- 🧘‍♂️ Not ready for battle? Hit the **Practice** button from the header for a chill solo session.
 
 It's all live, reactive, and surprisingly intense for something as nerdy as typing 😌
 
