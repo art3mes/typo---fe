@@ -45,7 +45,6 @@ export const calculateAccuracy = (correctCount, errorCount) => {
   return 0;
 };
 
-
 export const checkObjectParameters = (users) => {
   return users.some(
     (user) =>

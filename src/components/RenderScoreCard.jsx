@@ -6,7 +6,6 @@ import ScoreCard from "./ScoreCard";
 import { SOCKET_EVENTS } from "../utils/constants";
 import { calculateAccuracy, calculateWPM, getWinner } from "../utils/Helper";
 
-
 const RenderScoreCard = () => {
   const dispatch = useDispatch();
   const { correctCount, mistakeCount } = useSelector((state) => state.typing);

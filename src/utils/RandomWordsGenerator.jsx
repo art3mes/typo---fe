@@ -10,5 +10,4 @@ const RandomWordsGenerator = (count = DEFAULT_WORD_COUNT) => {
   return arr.slice(0, count);
 };
 
-
 export default RandomWordsGenerator;

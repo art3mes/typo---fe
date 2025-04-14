@@ -35,7 +35,6 @@ const TypingArea = () => {
       input.removeEventListener("blur", handleBlur);
     };
   }, []);
-  
 
   const handlePromptMouseDown = (e) => {
     e.preventDefault();

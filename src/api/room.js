@@ -12,7 +12,7 @@ const handleRoomRequest = async (endpoint, username, socketId, roomName) => {
     return res.data;
   } catch (err) {
     console.log(err);
-    
+
     throw err?.response?.data?.message;
   }
 };

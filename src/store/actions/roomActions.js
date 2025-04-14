@@ -6,7 +6,6 @@ import {
   SET_USERS,
 } from "../../utils/constants";
 
-
 export const createRoom = (roomId, userId) => ({
   type: CREATE_ROOM,
   payload: { roomId, userId },

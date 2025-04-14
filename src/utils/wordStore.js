@@ -1,5 +1,4 @@
 export const wordStore = [
-  
   "fizzled",
   "piggishly",
   "divinations",

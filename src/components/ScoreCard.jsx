@@ -20,7 +20,6 @@ const ScoreCard = ({
 }) => {
   let conditionalWPM = wpm ?? 0;
   const isDarkMode = useSelector((state) => state.game.darkMode);
-  
 
   return (
     <div

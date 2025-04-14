@@ -11,7 +11,6 @@ import offline from "../assets/offline.png";
 import github from "../assets/github.png";
 import linkedin from "../assets/linkedin.png";
 
-
 const imageMap = {
   darkMode: darkIcon,
   create: createRoom,

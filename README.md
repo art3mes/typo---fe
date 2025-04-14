@@ -20,6 +20,7 @@
 **typo😔** is a realtime multiplayer typing competition app made with love and just a pinch of chaos.
 
 Here's what it does:
+
 - 🧠 Users can **create a room** and share the name for others to join (up to 5 players).
 - 🕹️ Once the room creator hits **Start**, a **60-second countdown** begins.
 - ⌨️ Players type their hearts out while metrics like **correct letters**, **mistakes**, **accuracy**, and **WPM** update in realtime using Socket.IO.
@@ -32,6 +33,7 @@ It's all live, reactive, and surprisingly intense for something as nerdy as typi
 ## 🚀 Getting Started
 
 You'll need:
+
 - Both **frontend** and **backend** repos
 - A **MongoDB connection string**
 - Environment variables set up properly
@@ -47,7 +49,7 @@ You'll need:
    > npm install
 4. Start the frontend server:
    > npm run dev
-   
+
 ---
 
 ### 🔧 Backend Setup
@@ -60,7 +62,6 @@ You'll need:
 4. Start the backend server:
    > nodemon server.js
 
-
 ---
 
 ## ✨ Future Enhancements?
@@ -68,29 +69,28 @@ You'll need:
 There’s always more to build when you're a bit of a perfectionist (or just easily excited). Here are some things I might add... or might not... who knows:
 
 - 🌸 **Offline Practice Mode**  
-Because sometimes you just wanna zone out and type in peace, no internet drama.
+  Because sometimes you just wanna zone out and type in peace, no internet drama.
 
 - 🏆 **Global Leaderboard**  
-The data’s already in MongoDB — might as well flex those top scores, right?
+  The data’s already in MongoDB — might as well flex those top scores, right?
 
 - 🎨 **More Themes**  
-Dark and light are fine, but we all have main character moods. Theme selector incoming?
+  Dark and light are fine, but we all have main character moods. Theme selector incoming?
 
 - 📜 **Scrolling Typing Area**  
-Static walls of text? Nah. A dynamic, scrollable typing view that keeps up with your speed.
+  Static walls of text? Nah. A dynamic, scrollable typing view that keeps up with your speed.
 
 - 💬 **Chatroom in Lobby/Endgame**  
-For all the trash talk, GG’s, and existential dread. Maybe even emoji support if I get too ambitious.
+  For all the trash talk, GG’s, and existential dread. Maybe even emoji support if I get too ambitious.
 
 ---
 
 ## 🎉 Final words
 
-This was fun, nerve-wrecking, informative and a good use of my time. 
+This was fun, nerve-wrecking, informative and a good use of my time.
 
 Feel free to contribute, suggest features, or just vibe with it. Thanks for checking it out 💖
 
 ---
 
 > made with way too many keyboard noises 🎧
-

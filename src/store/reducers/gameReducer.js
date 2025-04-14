@@ -5,7 +5,6 @@ const initialState = {
   darkMode: false,
 };
 
-
 const gameReducer = (state = initialState, action) => {
   switch (action.type) {
     case "START_GAME":

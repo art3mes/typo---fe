@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 const App = () => {
   const isDarkMode = useSelector((state) => state.game.darkMode);
 
-  
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add("dark");
