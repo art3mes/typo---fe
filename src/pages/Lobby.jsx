@@ -8,6 +8,7 @@ import { SOCKET_EVENTS } from "../utils/constants";
 import { startGame } from "../store/actions/gameActions";
 import { setUsers } from "../store/actions/roomActions";
 import classNames from "classnames";
+import { checkObjectParameters } from "../utils/Helper";
 
 const Lobby = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,12 @@ const Lobby = () => {
 
   const handleStartGame = () => {
     setIsLoading(true);
+    const isOwner = checkObjectParameters(users);
+    if (!isOwner) {
+      toast.warn("Only Room Creator can start the game.");
+      setIsLoading(false);
+      return;
+    }
     socket.emit(SOCKET_EVENTS.START_GAME, { roomId, userId });
   };
 

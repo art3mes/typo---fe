@@ -44,3 +44,27 @@ export const calculateAccuracy = (correctCount, errorCount) => {
     return Math.round((correctCount / (correctCount + errorCount)) * 100);
   return 0;
 };
+
+export const checkObjectParameters = (users) => {
+  return users.some(
+    (user) =>
+      Object.prototype.hasOwnProperty.call(user, "currentRoom") &&
+      Object.prototype.hasOwnProperty.call(user, "wpm") &&
+      Object.prototype.hasOwnProperty.call(user, "socketId"),
+  );
+};
+
+export const getWinner = (metrics) => {
+  console.log("Player metrics", metrics);
+  let winner = null;
+  let highestWpm = -1;
+
+  for (const username in metrics) {
+    if (metrics[username].wpm > highestWpm) {
+      highestWpm = metrics[username].wpm;
+      winner = username;
+    }
+  }
+  console.log("Winner: ", winner);
+  return winner;
+};

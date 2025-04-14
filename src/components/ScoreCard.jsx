@@ -16,6 +16,7 @@ const ScoreCard = ({
   accuracy,
   wpm,
   icon,
+  isWinner,
 }) => {
   let conditionalWPM = wpm ?? 0;
   const isDarkMode = useSelector((state) => state.game.darkMode);
@@ -23,10 +24,12 @@ const ScoreCard = ({
   return (
     <div
       className={classNames(
-        "flex p-6 min-w-[200px] w-fit rounded-md shadow-md relative cursor-pointer",
+        "flex p-6 min-w-[200px] w-fit rounded-md shadow-md relative cursor-pointer transition-all duration-300",
         {
           "bg-ternary": !isDarkMode,
           "bg-dternary": isDarkMode,
+          "ring-4 ring-yellow-400": isWinner,
+          "shadow-xl scale-105": isWinner,
         },
       )}
     >

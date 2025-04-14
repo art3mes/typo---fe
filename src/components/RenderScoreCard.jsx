@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import socket from "../socket/socket";
 import ScoreCard from "./ScoreCard";
 import { SOCKET_EVENTS } from "../utils/constants";
-import { calculateAccuracy, calculateWPM } from "../utils/Helper";
+import { calculateAccuracy, calculateWPM, getWinner } from "../utils/Helper";
 
 const RenderScoreCard = () => {
   const dispatch = useDispatch();
@@ -16,13 +16,28 @@ const RenderScoreCard = () => {
   const [localWPM, setLocalWPM] = useState(null);
   const [accuracy, setAccuracy] = useState(0);
   const [playersMetrics, setPlayersMetrics] = useState({});
+  const [resultsReceived, setResultsReceived] = useState(0);
 
   const renderInitialData = (correctCount, mistakeCount, accuracy, id) => {
     setPlayersMetrics((prev) => ({
       ...prev,
-      [id]: { correctCount, mistakeCount, accuracy },
+      [id]: { correctCount, mistakeCount, accuracy, isWinner: false },
     }));
   };
+
+  useEffect(() => {
+    if (resultsReceived === users.length && users.length > 0) {
+      const winner = getWinner(playersMetrics);
+      console.log("🏁 Final Winner:", winner);
+      setPlayersMetrics((prev) => {
+        const updated = { ...prev };
+        Object.keys(updated).forEach((id) => {
+          updated[id].isWinner = id === winner;
+        });
+        return updated;
+      });
+    }
+  }, [resultsReceived, users.length]);
 
   useEffect(() => {
     if (users && users.length > 0) {
@@ -54,10 +69,21 @@ const RenderScoreCard = () => {
       socket.on(
         SOCKET_EVENTS.END_GAME,
         ({ userId, correctCount, mistakeCount, accuracy, wpm }) => {
-          setPlayersMetrics((prev) => ({
-            ...prev,
-            [userId]: { correctCount, mistakeCount, accuracy, wpm },
-          }));
+          setPlayersMetrics((prev) => {
+            const updated = {
+              ...prev,
+              [userId]: {
+                correctCount,
+                mistakeCount,
+                accuracy,
+                wpm,
+                isWinner: false,
+              },
+            };
+            return updated;
+          });
+
+          setResultsReceived((prev) => prev + 1);
         },
       );
 
@@ -93,6 +119,7 @@ const RenderScoreCard = () => {
               accuracy={metrics.accuracy}
               wpm={metrics.wpm}
               icon="live"
+              isWinner={metrics.isWinner}
             />
           ))}
         </div>
