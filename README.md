@@ -63,6 +63,27 @@ You'll need:
 
 ---
 
+## ✨ Future Enhancements?
+
+There’s always more to build when you're a bit of a perfectionist (or just easily excited). Here are some things I might add... or might not... who knows:
+
+- 🌸 **Offline Practice Mode**  
+Because sometimes you just wanna zone out and type in peace, no internet drama.
+
+- 🏆 **Global Leaderboard**  
+The data’s already in MongoDB — might as well flex those top scores, right?
+
+- 🎨 **More Themes**  
+Dark and light are fine, but we all have main character moods. Theme selector incoming?
+
+- 📜 **Scrolling Typing Area**  
+Static walls of text? Nah. A dynamic, scrollable typing view that keeps up with your speed.
+
+- 💬 **Chatroom in Lobby/Endgame**  
+For all the trash talk, GG’s, and existential dread. Maybe even emoji support if I get too ambitious.
+
+---
+
 ## 🎉 Final words
 
 This was fun, nerve-wrecking, informative and a good use of my time. 
