@@ -85,6 +85,14 @@ There’s always more to build when you're a bit of a perfectionist (or just eas
 
 ---
 
+## 📼 Media
+
+Jam link: https://jam.dev/c/53213a0b-2ce5-4e94-8de2-7046b2a1d2a3
+
+![typo](https://github.com/user-attachments/assets/61ba8e8f-4259-4eb3-87c9-8ee6708299bb)
+
+---
+
 ## 🎉 Final words
 
 This was fun, nerve-wrecking, informative and a good use of my time.
