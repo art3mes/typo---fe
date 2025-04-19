@@ -9,6 +9,7 @@ import { startGame } from "../store/actions/gameActions";
 import { setUsers } from "../store/actions/roomActions";
 import { checkObjectParameters } from "../utils/helper";
 import RenderImage from "../components/common/RenderImage";
+import Spinner from "../components/common/Spinner";
 
 const Lobby = () => {
   const dispatch = useDispatch();
@@ -146,7 +147,7 @@ const Lobby = () => {
         disabled={isLoading}
         onClick={handleStartGame}
       >
-        Start Game
+        {isLoading ? <Spinner /> : "Start Game"}
       </button>
     </div>
   );

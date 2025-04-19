@@ -7,6 +7,7 @@ import socket from "../socket/socket";
 import { createRoom, joinRoom, setUsers } from "../store/actions/roomActions";
 import { createRoomAPI, joinRoomAPI } from "../api/room";
 import { SOCKET_EVENTS } from "../utils/constants";
+import Spinner from "../components/common/Spinner";
 
 const RoomForm = () => {
   const [username, setUsername] = useState("");
@@ -116,7 +117,7 @@ const RoomForm = () => {
           disabled={isLoading}
           type="submit"
         >
-          {isCreating ? "Create" : "Join"}
+          {isLoading ? <Spinner /> : isCreating ? "Create" : "Join"}
         </button>
       </form>
 
