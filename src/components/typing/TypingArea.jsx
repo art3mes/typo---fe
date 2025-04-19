@@ -2,12 +2,11 @@ import { useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import CountdownTimer from "./CountDownTimer";
 import InputArea from "./InputArea";
-import ScoreCard from "./RenderScoreCard";
+import ScoreCard from "../score/RenderScoreCard";
 import RenderTypingPrompt from "./RenderTypingPrompt";
-import { setPrompt } from "../store/actions/typingActions";
-import { COUNTDOWN } from "../utils/constants";
-import { flattenWordsToChars } from "../utils/Helper";
-import RandomWordsGenerator from "../utils/RandomWordsGenerator";
+import { setPrompt } from "../../store/actions/typingActions";
+import { COUNTDOWN } from "../../utils/constants";
+import { flattenWordsToChars, generateRandomWords } from "../../utils/helper";
 
 const TypingArea = () => {
   const dispatch = useDispatch();
@@ -15,7 +14,7 @@ const TypingArea = () => {
   const [isFocused, setIsFocused] = useState(true);
 
   useEffect(() => {
-    const words = RandomWordsGenerator();
+    const words = generateRandomWords();
     const promptChars = flattenWordsToChars(words);
     dispatch(setPrompt(promptChars));
   }, [dispatch]);

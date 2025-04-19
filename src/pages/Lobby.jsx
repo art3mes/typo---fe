@@ -4,11 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import socket from "../socket/socket";
-import RenderImage from "../utils/RenderImage";
 import { SOCKET_EVENTS } from "../utils/constants";
 import { startGame } from "../store/actions/gameActions";
 import { setUsers } from "../store/actions/roomActions";
-import { checkObjectParameters } from "../utils/Helper";
+import { checkObjectParameters } from "../utils/helper";
+import RenderImage from "../components/common/RenderImage";
 
 const Lobby = () => {
   const dispatch = useDispatch();

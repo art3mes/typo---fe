@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { forwardRef } from "react";
 import { toast } from "react-toastify";
-import { appendChar } from "../store/actions/typingActions";
-import * as Engine from "../utils/Engine";
-import { startGame } from "../store/actions/gameActions";
+import { appendChar } from "../../store/actions/typingActions";
+import { startGame } from "../../store/actions/gameActions";
+import { evaluateTyping } from "../../utils/evaluateTyping";
 
 const InputArea = forwardRef((prop, ref) => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const InputArea = forwardRef((prop, ref) => {
       const updatedText = typedText + e.key;
       dispatch(appendChar(e.key));
 
-      Engine.evaluateTyping({
+      evaluateTyping({
         typedText: updatedText,
         promptText: prompt,
         gameStarted: true,

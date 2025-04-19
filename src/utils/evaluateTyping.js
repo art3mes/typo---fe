@@ -1,4 +1,4 @@
-import { calculateAccuracy, highlightPromptChar } from "./Helper";
+import { calculateAccuracy, highlightPromptChar } from "./helper";
 import {
   increaseCorrectCount,
   increaseMistakeCount,

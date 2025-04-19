@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import socket from "../socket/socket";
+import socket from "../../socket/socket";
 import ScoreCard from "./ScoreCard";
-import { SOCKET_EVENTS } from "../utils/constants";
-import { calculateAccuracy, calculateWPM, getWinner } from "../utils/Helper";
+import { SOCKET_EVENTS } from "../../utils/constants";
+import { calculateAccuracy, calculateWPM, getWinner } from "../../utils/helper";
 
 const RenderScoreCard = () => {
   const dispatch = useDispatch();

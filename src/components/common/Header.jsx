@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import RenderImage from "../utils/RenderImage";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
-import { resetRoomState } from "../store/actions/roomActions";
-import { resetTypingState } from "../store/actions/typingActions";
-import { resetGameState, setDarkMode } from "../store/actions/gameActions";
+import RenderImage from "./RenderImage";
+import { resetRoomState } from "../../store/actions/roomActions";
+import { resetTypingState } from "../../store/actions/typingActions";
+import { resetGameState, setDarkMode } from "../../store/actions/gameActions";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -50,7 +50,10 @@ const Header = () => {
       </div>
       <div className="flex flex-row gap-6 items-center">
         <span
-          className="text-xl cursor-pointer pr-6 border-r-2"
+          className={classNames("text-xl cursor-pointer pr-6 border-r-2", {
+            "border-primary": !isDarkMode,
+            "border-dprimary": isDarkMode,
+          })}
           onClick={handleHome}
         >
           Home
